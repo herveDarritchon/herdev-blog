@@ -1,0 +1,80 @@
+baseURL = "http://herdev.hervedarritchon.fr"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+title = 'Herdev Blog'
+theme = "papercss-hugo-theme"
+googleAnalytics = "UA-214081111-1"
+disqusShortname = "herveDarritchon"
+paginate = 5
+
+[privacy.disqus]
+disable = true
+
+[taxonomies]
+tag = "tags"
+
+[permalinks]
+post = "/:filename/"
+
+[imaging]
+quality = 99
+
+[params]
+homeMetaContent = "A Hugo theme made with PaperCSS, the less formal CSS framework."
+dateFormat = "2 Jan 2006"
+navTitleLink = "/"
+
+[[menu.nav]]
+name = "Blog"
+url = "/"
+weight = 1
+
+[[menu.nav]]
+name = "Tags"
+url = "/tags/"
+weight = 2
+
+[[menu.nav]]
+name = "About"
+url = "/about/"
+weight = 3
+
+[[menu.nav]]
+name = "RSS"
+url = "/index.xml"
+weight = 4
+
+[markup]
+defaultMarkdownHandler = "goldmark"
+
+[markup.goldmark.extensions]
+definitionList = true
+footnote = true
+linkify = true
+strikethrough = true
+table = true
+taskList = true
+typographer = true
+
+[markup.goldmark.parser]
+attribute = true
+autoHeadingID = true
+
+[markup.goldmark.renderer]
+hardWraps = false
+unsafe = true
+xHTML = false
+
+  [markup.highlight]
+  codeFences = true
+  hl_Lines = ""
+  lineNoStart = 1
+  lineNos = false
+  lineNumbersInTable = true
+  noClasses = true
+  style = "monokai"
+  tabWidth = 4
+
+  [markup.tableOfContents]
+  endLevel = 6
+  startLevel = 2
