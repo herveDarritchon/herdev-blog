@@ -1,7 +1,7 @@
 baseURL = "http://herdev.hervedarritchon.fr"
 languageCode = "en-us"
 defaultContentLanguage = "en"
-title = 'Herdev Blog'
+title = 'HerDev Blog'
 theme = "papercss-hugo-theme"
 googleAnalytics = "UA-214081111-1"
 disqusShortname = "herveDarritchon"
@@ -20,7 +20,7 @@ post = "/:filename/"
 quality = 99
 
 [params]
-homeMetaContent = "A Hugo theme made with PaperCSS, the less formal CSS framework."
+homeMetaContent = "A blog about coding or being a Dev."
 dateFormat = "2 Jan 2006"
 navTitleLink = "/"
 
