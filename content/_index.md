@@ -12,4 +12,4 @@ Our World is moving fast but Computer Science is moving even faster. So, as a De
 
 So It's been a while since I wanted to share my experience and my point of view on ***"Being a Dev"***, so I have started this blog.
 
-I will talk about any reflexions, issues, new paradigmes and codes I encounter in my day to day work.
+I will talk about any reflexions, issues, new paradigmes, ReST API and code I encounter in my day to day work.
