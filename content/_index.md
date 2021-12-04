@@ -11,3 +11,5 @@ As developers we are the soldiers in the front line of the ***"Digital World"***
 Our World is moving fast but Computer Science is moving even faster. So, as a Dev, we are ***"on the Edge"***. In everyday we have to learn new paradigmes, new languages, new frameworks. It is quite a challenge and there some kind of gamble to make the right choice.
 
 So It's been a while since I wanted to share my experience and my point of view on ***"Being a Dev"***, so I have started this blog.
+
+I will talk about any reflexions, issues, new paradigmes and codes I encounter in my day to day work.

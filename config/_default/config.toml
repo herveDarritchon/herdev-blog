@@ -6,6 +6,7 @@ theme = "papercss-hugo-theme"
 googleAnalytics = "UA-214081111-1"
 disqusShortname = "herveDarritchon"
 paginate = 5
+enableRobotsTXT = true
 
 [privacy.disqus]
 disable = true
