@@ -13,6 +13,9 @@ disable = true
 
 [taxonomies]
 tag = "tags"
+category = 'categories'
+series = 'series'
+tutorials = 'tutorials'
 
 [permalinks]
 post = "/:filename/"
