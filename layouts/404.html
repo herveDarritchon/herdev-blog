@@ -1,7 +1,11 @@
 {{ define "main"}}
-    <main id="main">
-      <div>
-       <h1 id="title"><a href="{{ "/" | relURL }}">Go Home</a></h1>
-      </div>
-    </main>
+<main id="main">
+  <div class="card row flex-middle">
+    <div>
+      <img src="images/http-404-not-found.png" width="400" height="400" title="HTTP 404 NOT FOUND"
+        alt="HTTP 404 NOT FOUND">
+    </div>
+    <h1 id="title"><a href="{{ " /" | relURL }}">Go Home</a></h1>
+  </div>
+</main>
 {{ end }}

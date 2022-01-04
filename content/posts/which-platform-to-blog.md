@@ -9,6 +9,7 @@ tags_weight = 22
 title = 'Which platform to blog'
 date = 2021-11-30T11:48:33+01:00
 publishdate= 2021-12-06
+weight = 13
 +++
 
 Quickly after deciding to ***Blog***, I needed to choose my platform. I have found quite a lot of blogging platforms free on Internet ([blogger.com](https://www.blogger.com/), [medium.com](https://medium.com/), ...). But I didn't want to be locked down to one platform and as a developper I wanted to have the same process as coding. So I shorty felt the need to have something simple, something very similar to my day to day job, it's why I chose to do my content in markdown and to deploy it as I push code to a git repo.

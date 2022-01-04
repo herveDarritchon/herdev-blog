@@ -1,4 +1,4 @@
-baseURL = "http://herdev.hervedarritchon.fr"
+baseURL = "https://herdev.hervedarritchon.fr"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 title = 'HerDev Blog'
