@@ -18,7 +18,35 @@ enableRobotsTXT = true
     weight = 2
     languageName = "English"
     languageCode = "en-US"
-    
+
+[languages.fr.menu]
+  [[languages.fr.menu.nav]]
+    name = "Blog"
+    url = "/"
+    weight = 1
+  [[languages.fr.menu.nav]]
+    name = "Tags"
+    url = "/tags/"
+    weight = 2
+  [[languages.fr.menu.nav]]
+    name = "À propos"
+    url = "/about/"
+    weight = 3
+
+[languages.en.menu]
+  [[languages.en.menu.nav]]
+    name = "Blog"
+    url = "/en/"
+    weight = 1
+  [[languages.en.menu.nav]]
+    name = "Tags"
+    url = "/en/tags/"
+    weight = 2
+  [[languages.en.menu.nav]]
+    name = "About"
+    url = "/en/about/"
+    weight = 3
+
 [pagination]
 pagerSize = 5
 
