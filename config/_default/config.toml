@@ -70,26 +70,6 @@ homeMetaContent = "A blog about coding or being a Dev."
 dateFormat = "2 Jan 2006"
 navTitleLink = "/"
 
-[[menu.nav]]
-name = "Blog"
-url = "/"
-weight = 1
-
-[[menu.nav]]
-name = "Tags"
-url = "/tags/"
-weight = 2
-
-[[menu.nav]]
-name = "About"
-url = "/about/"
-weight = 3
-
-[[menu.nav]]
-name = "RSS"
-url = "/index.xml"
-weight = 4
-
 [markup]
 defaultMarkdownHandler = "goldmark"
 
