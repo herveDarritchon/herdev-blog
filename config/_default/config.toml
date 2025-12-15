@@ -69,6 +69,10 @@ quality = 99
 homeMetaContent = "A blog about coding or being a Dev."
 dateFormat = "2 Jan 2006"
 navTitleLink = "/"
+navLogo = "logo.png"
+navLogoAlt = "HerDev Blog"
+navLogoHeight = 28
+
 
 [markup]
 defaultMarkdownHandler = "goldmark"
