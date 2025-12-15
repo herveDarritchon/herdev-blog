@@ -10,6 +10,7 @@ jobs:
   deploy:
     runs-on: ubuntu-22.04
     concurrency:
+      cancel-in-progress: true
       group: ${{ github.workflow }}-${{ github.ref }}
 
     steps:
