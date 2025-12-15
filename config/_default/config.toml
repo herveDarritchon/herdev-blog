@@ -1,12 +1,26 @@
 baseURL = "https://herdev.hervedarritchon.fr"
 languageCode = "en-us"
-defaultContentLanguage = "en"
+defaultContentLanguage = "fr"
+defaultContentLanguageInSubdir = false
 title = 'HerDev Blog'
 theme = "papercss-hugo-theme"
 googleAnalytics = "UA-214081111-1"
 disqusShortname = "herveDarritchon"
-paginate = 5
 enableRobotsTXT = true
+
+
+[languages]
+  [languages.fr]
+    weight = 1
+    languageName = "Français"
+    languageCode = "fr-FR"
+  [languages.en]
+    weight = 2
+    languageName = "English"
+    languageCode = "en-US"
+    
+[pagination]
+pagerSize = 5
 
 [privacy.disqus]
 disable = true
@@ -18,7 +32,7 @@ series = 'series'
 tutorials = 'tutorials'
 
 [permalinks]
-post = "/:filename/"
+post = "/:contentbasename/"
 
 [imaging]
 quality = 99
