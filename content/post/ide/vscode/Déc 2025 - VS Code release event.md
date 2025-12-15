@@ -3,14 +3,12 @@ title = "VS Code : de l’éditeur + chat… au poste de pilotage d’agents (et
 date = 2025-12-15T09:00:00+01:00
 slug = "vscode-cockpit-agents-mcp-models"
 draft = false
-
-categories = ["Tooling", "AI", "Developer Experience"]
-categories_weight = 62
-
+categories = ["Tooling", "AI", "Development"]
+tutorials = ['VS Code']
+categories_weight = 44
 series = ["VS Code — Notes de terrain"]
-tags = ["VS Code", "Copilot", "Agents", "MCP", "LLM", "Developer Productivity", "Git", "Worktrees"]
+tags = ["VS Code", "Copilot", "AI", "Development", "Productivity"]
 tags_weight = 41
-
 weight = 4
 +++
 
