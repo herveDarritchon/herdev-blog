@@ -72,7 +72,7 @@ navTitleLink = "/"
 navLogo = "logo.webp"
 navLogoAlt = "HerDev Blog"
 navLogoHeight = 50
-
+hideFooter = false
 
 [markup]
 defaultMarkdownHandler = "goldmark"
