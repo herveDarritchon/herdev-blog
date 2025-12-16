@@ -1,18 +1,22 @@
-+++
-
-
-+++
-weight = 2
-draft = false
-date = 2021-12-06T14:48:33+01:00
-title = 'Build your Hugo platform'
-tags_weight = 21
-tags = ['Development', 'Tutorial', 'Hugo']
-slug = 'build-your-hugo-platform'
-tutorials = ['Hugo']
-series = ['How to blog with Hugo']
-categories_weight = 42
-categories = ['Development']
+---
+title: "Build your Hugo platform"
+date: 2021-12-06T14:48:33+01:00
+draft: false
+weight: 2
+slug: "build-your-hugo-platform"
+tags:
+  - "Development"
+  - "Tutorial"
+  - "Hugo"
+tags_weight: 21
+tutorials:
+  - "Hugo"
+series:
+  - "How to blog with Hugo"
+categories:
+  - "Development"
+categories_weight: 42
+---
 
 Build your Hugo platform
 

@@ -1,16 +1,22 @@
-+++
-categories = ['Architecture']
-categories_weight = 52
-series = ['Software Architecture Principles']
-tutorials = ['Http4k']
-slug = 'model-layer-segregation'
-tags = ['Development', 'Architecture', 'Back-End']
-tags_weight = 31
-title = 'Model Layer Segregation'
-date = 2022-07-26T14:48:33+01:00
-draft = true
-weight = 3
-+++
+---
+categories:
+  - "Architecture"
+categories_weight: 52
+series:
+  - "Software Architecture Principles"
+tutorials:
+  - "Http4k"
+slug: "model-layer-segregation"
+tags:
+  - "Development"
+  - "Architecture"
+  - "Back-End"
+tags_weight: 31
+title: "Model Layer Segregation"
+date: 2022-07-26T14:48:33+01:00
+draft: true
+weight: 3
+---
 
 In this post we discuss the problem of separating layers and models to simplify code and avoid cross-layer impact of design choices. Proper separation reduces coupling between layers and makes components easier to test and evolve.
 

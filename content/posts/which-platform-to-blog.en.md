@@ -1,16 +1,22 @@
-+++
-categories = ['Development']
-categories_weight = 44
-series = ['How to blog with Hugo']
-tutorials = ['Hugo']
-slug = 'which-platform-to-blog'
-tags = ['Development', 'Mentoring', 'Hugo']
-tags_weight = 22
-title = 'Which platform to blog'
-date = 2021-11-30T11:48:33+01:00
-publishdate= 2021-12-06
-weight = 13
-+++
+---
+categories:
+  - "Development"
+categories_weight: 44
+series:
+  - "How to blog with Hugo"
+tutorials:
+  - "Hugo"
+slug: "which-platform-to-blog"
+tags:
+  - "Development"
+  - "Mentoring"
+  - "Hugo"
+tags_weight: 22
+title: "Which platform to blog"
+date: 2021-11-30T11:48:33+01:00
+publishdate: 2021-12-06
+weight: 13
+---
 
 Shortly after deciding to blog, I needed to choose a platform. There are many free blogging platforms (e.g. blogger.com, medium.com), but I didn’t want to be locked into a hosted service. As a developer, I wanted the same workflow as my code: Markdown content versioned in Git and automated deployment.
 

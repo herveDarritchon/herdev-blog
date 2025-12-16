@@ -1,16 +1,22 @@
-+++
-categories = ['Development']
-categories_weight = 52
-series = ['Kotlin tutorials']
-tutorials = ['Kotlin']
-slug = 'sealed-class-subtype-serialization'
-tags = ['Development', 'Kotlin', 'Jackson']
-tags_weight = 31
-title = 'Sealed Class Subtype Serialization'
-date = 2022-07-27T14:48:33+01:00
-draft = true
-weight = 2
-+++
+---
+categories:
+  - "Development"
+categories_weight: 52
+series:
+  - "Kotlin tutorials"
+tutorials:
+  - "Kotlin"
+slug: "sealed-class-subtype-serialization"
+tags:
+  - "Development"
+  - "Kotlin"
+  - "Jackson"
+tags_weight: 31
+title: "Sealed Class Subtype Serialization"
+date: 2022-07-27T14:48:33+01:00
+draft: true
+weight: 2
+---
 
 Today I worked on a side project and encountered an issue with Jackson serialization of Kotlin sealed class subtypes.
 

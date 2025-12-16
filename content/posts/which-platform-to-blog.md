@@ -1,16 +1,22 @@
-+++
-categories = ['Development']
-categories_weight = 44
-series = ['How to blog with Hugo']
-tutorials = ['Hugo']
-slug = 'which-platform-to-blog'
-tags = ['Development', 'Mentoring', 'Hugo']
-tags_weight = 22
-title = 'Which platform to blog'
-date = 2021-11-30T11:48:33+01:00
-publishdate= 2021-12-06
-weight = 13
-+++
+---
+categories:
+  - "Development"
+categories_weight: 44
+series:
+  - "How to blog with Hugo"
+tutorials:
+  - "Hugo"
+slug: "which-platform-to-blog"
+tags:
+  - "Development"
+  - "Mentoring"
+  - "Hugo"
+tags_weight: 22
+title: "Which platform to blog"
+date: 2021-11-30T11:48:33+01:00
+publishdate: 2021-12-06
+weight: 13
+---
 
 Quickly after deciding to ***Blog***, I needed to choose my platform. I have found quite a lot of blogging platforms free on Internet ([blogger.com](https://www.blogger.com/), [medium.com](https://medium.com/), ...). But I didn't want to be locked down to one platform and as a developper I wanted to have the same process as coding. So I shorty felt the need to have something simple, something very similar to my day to day job, it's why I chose to do my content in markdown and to deploy it as I push code to a git repo.
 
@@ -35,4 +41,4 @@ But it is always good to learn so I have chosen Github because I don't know Gith
 
 I have a good Workflow to do and deploy my Blog. I have a bunch of markdown files with versionning using Git and when I push my new content (using `git commit`), the new version of my Blog is automatically deployed to my [Github Pages](https://hervedarritchon.github.io).
 
-This is really what I wanted, something simple, something close to how I work and using Hugo Themes I have something with a somehow good looking. 
+This is really what I wanted, something simple, something close to how I work and using Hugo Themes I have something with a somehow good looking.

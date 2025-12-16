@@ -1,16 +1,22 @@
-+++
-categories = ['Development']
-categories_weight = 52
-series = ['Kotlin tutorials']
-tutorials = ['Kotlin']
-slug = 'sealed-class-subtype-serialization'
-tags = ['Development', 'Kotlin', 'Jackson']
-tags_weight = 31
-title = 'Sealed Class Subtype Serialization'
-date = 2022-07-27T14:48:33+01:00
-draft = true
-weight = 2
-+++
+---
+categories:
+  - "Development"
+categories_weight: 52
+series:
+  - "Kotlin tutorials"
+tutorials:
+  - "Kotlin"
+slug: "sealed-class-subtype-serialization"
+tags:
+  - "Development"
+  - "Kotlin"
+  - "Jackson"
+tags_weight: 31
+title: "Sealed Class Subtype Serialization"
+date: 2022-07-27T14:48:33+01:00
+draft: true
+weight: 2
+---
 
 Today, I was working on my side project and I encountered an issue with [Jackson](/tags/jackson/) serialization of [Kotlin](/tags/kotlin) Sealed Class subtypes.
 
