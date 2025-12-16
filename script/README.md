@@ -1,6 +1,6 @@
 # README — `herdev` (CLI Hugo)
 
-`herdev` est un petit script bash pour gérer ton blog Hugo depuis n’importe où : créer un post (bundle), lancer le serveur, publier proprement, et afficher un post en stdout (pratique pour copier/coller un template ou montrer un exemple).
+`herdev` est un petit script bash pour gérer ton blog Hugo depuis n’importe où : créer un post (bundle), lancer le serveur, publier proprement, afficher un post en stdout, et (nouveau) **créer un post à partir d’un fichier Markdown source en copiant aussi ses assets**.
 
 ---
 
@@ -41,23 +41,17 @@ Ces options s’appliquent **à toutes** les commandes.
 
 ### `-C, --dir <path>` — choisir le repo blog
 
-Cas typique : tu bosses sur plusieurs blogs (ou ton blog n’est pas dans le dossier par défaut).
-
 ```bash
 herdev -C ~/Workspace/Perso/Blogs/herdev-blog serve
 ```
 
 ### `-S, --section <name>` — choisir la section Hugo
 
-Cas typique : tu as plusieurs sections (`posts`, `notes`, `jvm`, etc.) et tu veux que `new` crée au bon endroit.
-
 ```bash
 herdev -S notes new "Une note rapide"
 ```
 
 ### `-E, --editor <cmd>` — forcer l’éditeur
-
-Cas typique : tu veux ouvrir dans VS Code, ou dans un autre éditeur, ponctuellement.
 
 ```bash
 herdev -E "code -n" new "Un post ouvert dans VS Code"
@@ -73,145 +67,144 @@ herdev --help
 
 ## Pipeline logique “habituel” (avec exemples concrets)
 
-L’idée : tu pars d’un “template” que tu veux reproduire, tu crées ton post, tu le remplis, tu vérifies en local, puis tu publies.
-
 ### 0) Afficher un post existant comme “template” (stdout)
-
-**Objectif :** récupérer un exemple de structure (front matter, sections, shortcodes, etc.) sans ouvrir l’éditeur.
-
-* Prendre le post **le plus récent** de `content/<section>/` :
 
 ```bash
 herdev display example
 ```
 
-* Prendre un post précis (chemin relatif au repo) :
+Ou un post précis :
 
 ```bash
 herdev display example content/posts/2025-12-16-mon-post/index.md
 ```
 
-* Ou un chemin relatif à `content/<section>/` :
+Redirection utile :
 
 ```bash
-herdev display example 2025-12-16-mon-post/index.md
+herdev display example > ./drafts/template.md
 ```
-
-Tu peux ensuite copier/coller, ou mieux : rediriger vers un fichier temporaire pour bosser dessus :
-
-```bash
-herdev display example > /tmp/template.md
-open /tmp/template.md
-```
-
-> Point important : ça “dump” le contenu tel quel. Si tu veux un vrai système de “new from template”, ça se fait, mais c’est une fonctionnalité distincte (et ça impose de choisir *où* vivent les templates).
 
 ---
 
-### 1) Créer un nouveau post bundle
+## 1) Créer un post
 
-**Objectif :** générer `content/<section>/YYYY-MM-DD-slug/index.md` et l’ouvrir.
+Tu as **trois workflows**.
+
+### A) À partir d’un titre (classique)
+
+Crée un bundle via `hugo new` et l’ouvre :
 
 ```bash
 herdev new "Sealed Class : sérialisation des sous-types en Kotlin"
 ```
 
-Avec section spécifique :
+---
+
+### B) À partir d’un fichier Markdown source (copie “md only”)
+
+Crée un bundle et copie le fichier `.md` tel quel dans `index.md`.
+
+✅ Quand l’utiliser : tu as déjà ton contenu rédigé dans un fichier (brouillon, export, template rempli, etc.) et tu veux l’importer.
+
+Contraintes :
+
+* le fichier source **doit contenir un front matter** (`---` ou `+++`) en première ligne
+* `herdev` **n’ajoute aucun front matter** (il copie le fichier entier)
+* le slug est dérivé du `title` du front matter
+
+Exemples :
 
 ```bash
-herdev -S jvm new "Kotlin: sealed class et polymorphisme"
+herdev new ./drafts/mon-post.md
 ```
 
-Avec un repo explicite (si tu n’as pas exporté `HERDEV_DIR`) :
+Forme explicite :
 
 ```bash
-herdev -C ~/Workspace/Perso/Blogs/herdev-blog new "Mon nouveau post"
+herdev new --from ./drafts/mon-post.md
 ```
 
 ---
 
-### 2) Éditer (dans ton éditeur)
+### C) À partir d’un fichier Markdown + assets (nouveau : `--with-assets`)
 
-Si tu as défini `HERDEV_EDITOR="code -n"`, le fichier s’ouvre automatiquement.
+`--with-assets` sert à copier **les fichiers du même dossier** que le `.md` source dans le bundle Hugo, en plus de `index.md`.
 
-Sinon tu peux forcer à la commande :
+✅ Quand l’utiliser : ton post a des **images, schémas, fichiers annexes** référencés dans le markdown (typiquement `![...](image.png)` ou `![...](./images/foo.png)`).
+
+📌 Où l’utiliser : **uniquement** avec `new --from <source.md>` (ou `new <source.md>`).
+Ça n’a aucun sens avec `new "Titre"`.
+
+**Commandes :**
 
 ```bash
-herdev -E "code -n" new "Mon post"
+herdev new --from ./drafts/mon-post.md --with-assets
+```
+
+ou, forme courte :
+
+```bash
+herdev new ./drafts/mon-post.md --with-assets
+```
+
+**Ce qui est copié :**
+
+* tout ce qui est dans le **même dossier** que `mon-post.md`
+* y compris sous-dossiers (copie récursive)
+
+**Ce qui est volontairement exclu :**
+
+* le fichier `.md` source lui-même (déjà copié en `index.md`)
+* les autres fichiers `*.md` (pour éviter de publier tes brouillons/notes par erreur)
+* `.DS_Store`
+
+> Conséquence pratique : mets ton `.md` et ses images dans un même dossier “draft”, par exemple `./drafts/mon-post/`, et ça se transfère proprement vers `content/<section>/.../`.
+
+Exemple structuré recommandé :
+
+```
+drafts/
+  mon-post/
+    mon-post.md
+    hero.png
+    diagram.svg
+    images/
+      step1.png
+      step2.png
+```
+
+Commande :
+
+```bash
+herdev new --from ./drafts/mon-post/mon-post.md --with-assets
 ```
 
 ---
 
-### 3) Prévisualiser en local (drafts inclus)
-
-**Objectif :** vérifier rendu, liens, images, shortcodes, etc.
+## 2) Prévisualiser en local (drafts inclus)
 
 ```bash
 herdev serve
 ```
 
-Si tu as plusieurs repos :
-
-```bash
-herdev -C ~/Workspace/Perso/Blogs/herdev-blog serve
-```
-
 ---
 
-### 4) Publier
+## 3) Publier
 
-**Objectif :**
-
-* met `draft: true` → `draft: false` si présent (YAML ou TOML)
-* build local (`hugo --minify`) pour casser si ça ne compile pas
-* commit + push
-
-Publier en donnant le chemin :
+Publier un post précis :
 
 ```bash
 herdev publish content/posts/2025-12-16-mon-post/index.md
 ```
 
-Publier sans chemin : il prend le **premier fichier modifié** sous `content/` selon `git status`.
+Publier sans chemin (prend le premier fichier modifié sous `content/`) :
 
 ```bash
 herdev publish
 ```
 
-> Important : dans la version script que tu as, `publish` fait `git add "$target"` (donc il ajoute seulement le fichier).
-> Si ton post est un bundle avec images, ça ne suffit pas. Dans ce cas, publie en ciblant le dossier (ou améliore le script pour `git add "$(dirname "$target")"`). C’est le comportement le plus logique pour Hugo bundles.
-
----
-
-## Recettes pratiques (vraie vie)
-
-### Pipeline “template → nouveau post”
-
-1. Je récupère un exemple :
-
-```bash
-herdev display example content/posts/2025-11-01-mon-template/index.md > /tmp/template.md
-```
-
-2. Je crée un nouveau post :
-
-```bash
-herdev new "Mon nouveau post basé sur le template"
-```
-
-3. Je copie les sections utiles du template dans le nouveau `index.md` (dans l’éditeur)
-
-4. Je preview :
-
-```bash
-herdev serve
-```
-
-5. Je publie :
-
-```bash
-herdev publish content/posts/2025-12-16-mon-nouveau-post/index.md
-```
+> `publish` est “bundle-safe” : si tu publies un `.../index.md`, il ajoute automatiquement le **dossier du bundle** (donc images incluses).
 
 ---
 
@@ -221,36 +214,4 @@ herdev publish content/posts/2025-12-16-mon-nouveau-post/index.md
 * `HERDEV_SECTION` : section (ex: `posts`)
 * `HERDEV_EDITOR` : commande d’éditeur (ex: `code -n`)
 
-Exemple réaliste :
-
-```bash
-export HERDEV_DIR="$HOME/Workspace/Perso/Blogs/herdev-blog"
-export HERDEV_SECTION="posts"
-export HERDEV_EDITOR="code -n"
-```
-
 ---
-
-## Frictions à anticiper (et ce que je recommande)
-
-* Si tu utilises des **bundles avec images** : ton `publish` doit ajouter **le dossier du bundle**, pas juste `index.md`.
-  Recommandation : remplacer dans le script :
-
-```bash
-git -C "$BLOG_DIR" add "$target"
-```
-
-par :
-
-```bash
-git -C "$BLOG_DIR" add "$(dirname "$target")"
-```
-
-Ça évite les “je publie le md mais j’oublie les images”.
-
-* Ton mode “template” actuel est volontairement simple (affichage stdout). Si tu veux un vrai `new --from <template>`, on peut le faire proprement, mais il faudra décider :
-
-  * où sont stockés les templates (`tools/templates/` ? `content/_templates/` ?),
-  * comment on injecte automatiquement `title`, `date`, éventuellement `tags`.
-
-Si tu veux, je te propose une extension minimale **sans complexifier** : `herdev new --from <path-to-template>` qui copie juste le contenu template dans le nouveau post en remplaçant `title` et `date`.
