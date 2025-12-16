@@ -22,7 +22,7 @@ enableRobotsTXT = true
 [languages.fr.menu]
   [[languages.fr.menu.nav]]
     name = "Blog"
-    url = "/"
+    url = "/posts/"
     weight = 1
   [[languages.fr.menu.nav]]
     name = "Tags"
@@ -36,7 +36,7 @@ enableRobotsTXT = true
 [languages.en.menu]
   [[languages.en.menu.nav]]
     name = "Blog"
-    url = "/en/"
+    url = "/en/posts/"
     weight = 1
   [[languages.en.menu.nav]]
     name = "Tags"
@@ -60,13 +60,14 @@ series = 'series'
 tutorials = 'tutorials'
 
 [permalinks]
-post = "/:contentbasename/"
+posts = "/:contentbasename/"
 
 [imaging]
 quality = 99
 
 [params]
 homeMetaContent = "A blog about coding or being a Dev."
+mainSections = ["posts"]
 dateFormat = "2 Jan 2006"
 navTitleLink = "/"
 navLogo = "logo.webp"

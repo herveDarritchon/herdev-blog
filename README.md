@@ -56,7 +56,7 @@ hugo --minify
 ## Create a new post
 
 ```bash
-hugo new post/my-new-article.md
+hugo new posts/my-new-article.md
 ```
 
 If you use sections other than `post/`, adapt accordingly.
