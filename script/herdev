@@ -1,0 +1,350 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BLOG_DIR="${HERDEV_DIR:-$HOME/dev/herdev}"
+SECTION="${HERDEV_SECTION:-posts}"
+EDITOR_CMD="${HERDEV_EDITOR:-}"
+
+die(){ echo "herdev: $*" >&2; exit 1; }
+
+usage() {
+  cat <<'EOF'
+herdev — créer/publier un post Hugo depuis n'importe où
+
+USAGE:
+  herdev [options] <commande> [args]
+
+OPTIONS (globales):
+  -C, --dir <path>         Chemin du repo (défaut: $HERDEV_DIR ou ~/dev/herdev)
+  -S, --section <name>     Section Hugo (défaut: $HERDEV_SECTION ou "posts")
+  -E, --editor <cmd>       Commande d'éditeur (ex: 'code -n') (défaut: $HERDEV_EDITOR)
+  -h, --help               Affiche ce help
+
+COMMANDES:
+  new "Titre"                         Crée un bundle content/<section>/YYYY-MM-DD-slug/index.md via hugo et l'ouvre
+  new <source.md> [--with-assets]     Copie source.md tel quel dans index.md (front matter requis dans source.md)
+  new --from <source.md> [--with-assets]
+                                      Idem, forme explicite
+                                      --with-assets copie aussi les assets (même dossier), hors *.md
+
+  serve                               Lance hugo server (drafts inclus) + navigateToChanged
+  publish [path]                      Met draft=false, build, commit, push (path optionnel)
+  cd                                  Ouvre le dossier du blog
+
+  display example [path]              Affiche un post en stdout comme exemple
+
+EXEMPLES:
+  herdev new "Mon super titre"
+  herdev new ./drafts/mon-post.md
+  herdev new ./drafts/mon-post.md --with-assets
+  herdev new --from ./drafts/mon-post.md --with-assets
+EOF
+}
+
+need_repo() {
+  [[ -d "$BLOG_DIR/.git" ]] || die "repo introuvable: $BLOG_DIR (mets HERDEV_DIR dans ton shell rc)"
+  command -v hugo  >/dev/null || die "hugo introuvable (ex: brew install hugo)"
+  command -v git   >/dev/null || die "git introuvable"
+  command -v iconv >/dev/null || die "iconv introuvable"
+}
+
+slugify() {
+  local s="$1"
+  s="$(printf '%s' "$s" | tr '[:upper:]' '[:lower:]')"
+  s="$(printf '%s' "$s" | iconv -f UTF-8 -t ASCII//TRANSLIT 2>/dev/null || true)"
+  [[ -n "$s" ]] || s="$1"
+  s="$(printf '%s' "$s" | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//; s/-+/-/g')"
+  printf '%s\n' "${s:-post}"
+}
+
+open_in_editor() {
+  local file="$1"
+  if [[ -n "$EDITOR_CMD" ]]; then
+    bash -lc "$EDITOR_CMD \"$file\""
+  else
+    open "$file" >/dev/null 2>&1 || true
+  fi
+}
+
+frontmatter_set_draft_false() {
+  local f="$1" tmp
+  tmp="$(mktemp "${TMPDIR:-/tmp}/herdev.XXXXXX")"
+
+  awk '
+    BEGIN { in_fm=0; delim=""; changed=0 }
+    NR==1 && ($0=="---" || $0=="+++") { in_fm=1; delim=$0; print; next }
+    in_fm && $0==delim { in_fm=0; print; next }
+    in_fm {
+      if ($0 ~ /^draft[[:space:]]*:[[:space:]]*true[[:space:]]*$/) { sub(/true/,"false"); changed=1 }
+      if ($0 ~ /^draft[[:space:]]*=[[:space:]]*true[[:space:]]*$/) { sub(/true/,"false"); changed=1 }
+      print; next
+    }
+    { print }
+    END { if (changed==0) exit 2 }
+  ' "$f" >"$tmp" || true
+
+  if [[ ${PIPESTATUS[0]} -eq 2 ]]; then
+    rm -f "$tmp"
+    return 0
+  fi
+
+  mv "$tmp" "$f"
+}
+
+frontmatter_get_title() {
+  local f="$1"
+  awk '
+    BEGIN { in_fm=0; delim=""; found=0 }
+    NR==1 && ($0=="---" || $0=="+++") { in_fm=1; delim=$0; next }
+    in_fm && $0==delim { exit 1 }
+    in_fm {
+      if (match($0, /^title[[:space:]]*:[[:space:]]*(.*)$/, a) ||
+          match($0, /^title[[:space:]]*=[[:space:]]*(.*)$/, a)) {
+        t=a[1]
+        sub(/^[[:space:]]+/, "", t); sub(/[[:space:]]+$/, "", t)
+        if (t ~ /^".*"$/) { sub(/^"/,"",t); sub(/"$/,"",t) }
+        else if (t ~ /^\047.*\047$/) { sub(/^\047/,"",t); sub(/\047$/,"",t) }
+        print t
+        found=1
+        exit 0
+      }
+    }
+    END { exit(found?0:1) }
+  ' "$f" 2>/dev/null || printf '%s\n' "$(basename "$f" .md)"
+}
+
+frontmatter_has_any() {
+  awk 'NR==1 { exit (!($0=="---" || $0=="+++")) }' "$1"
+}
+
+resolve_file_path() {
+  local p="$1"
+  [[ -n "$p" ]] || die "chemin manquant"
+  if [[ "$p" != /* ]]; then
+    p="$(cd "$(dirname "$p")" 2>/dev/null && pwd)/$(basename "$p")"
+  fi
+  [[ -f "$p" ]] || die "fichier introuvable: $1"
+  echo "$p"
+}
+
+copy_assets_from_source_dir() {
+  local source_md="$1"
+  local dest_dir="$2"
+
+  local src_dir src_base
+  src_dir="$(dirname "$source_md")"
+  src_base="$(basename "$source_md")"
+
+  # Copie tout ce qui est dans le même dossier, sauf:
+  # - le md source
+  # - les autres *.md
+  # - .DS_Store
+  # Inclut sous-dossiers (cp -R).
+  shopt -s nullglob dotglob
+  for item in "$src_dir"/*; do
+    local base
+    base="$(basename "$item")"
+
+    [[ "$base" == "$src_base" ]] && continue
+    [[ "$base" == ".DS_Store" ]] && continue
+    [[ "$base" == *.md ]] && continue
+
+    cp -R "$item" "$dest_dir/"
+  done
+  shopt -u nullglob dotglob
+}
+
+resolve_post_path() {
+  local arg="${1:-}"
+  local file=""
+
+  if [[ -n "$arg" ]]; then
+    if [[ "$arg" = /* ]]; then
+      file="$arg"
+    else
+      if [[ -f "$BLOG_DIR/$arg" ]]; then
+        file="$BLOG_DIR/$arg"
+      elif [[ -f "$BLOG_DIR/content/$SECTION/$arg" ]]; then
+        file="$BLOG_DIR/content/$SECTION/$arg"
+      else
+        die "post introuvable: $arg"
+      fi
+    fi
+    [[ -f "$file" ]] || die "fichier introuvable: $file"
+    echo "$file"
+    return 0
+  fi
+
+  local root="$BLOG_DIR/content/$SECTION"
+  [[ -d "$root" ]] || die "section introuvable: $root"
+
+  # 1) tente d'abord les bundles (index.md)
+  file="$(
+    find "$root" -type f -name 'index.md' -print0 2>/dev/null \
+      | xargs -0 ls -t 2>/dev/null \
+      | head -n 1 || true
+  )"
+
+  # 2) fallback: pages .md “flat” (exclut _index*.md)
+  if [[ -z "$file" ]]; then
+    file="$(
+      find "$root" -type f -name '*.md' \
+        ! -name '_index.md' \
+        ! -name '_index.*.md' \
+        -print0 2>/dev/null \
+        | xargs -0 ls -t 2>/dev/null \
+        | head -n 1 || true
+    )"
+  fi
+
+  [[ -n "$file" ]] || die "aucun post trouvé sous $root"
+  echo "$file"
+}
+
+# -----------------------
+# Parse options globales
+# -----------------------
+cmd=""
+args=()
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -h|--help) usage; exit 0 ;;
+    -C|--dir)     [[ $# -ge 2 ]] || die "option $1: argument manquant"; BLOG_DIR="$2"; shift 2 ;;
+    -S|--section) [[ $# -ge 2 ]] || die "option $1: argument manquant"; SECTION="$2"; shift 2 ;;
+    -E|--editor)  [[ $# -ge 2 ]] || die "option $1: argument manquant"; EDITOR_CMD="$2"; shift 2 ;;
+    --) shift; break ;;
+    -*) die "option inconnue: $1 (utilise --help)" ;;
+    *)  cmd="$1"; shift; args=("$@"); break ;;
+  esac
+done
+
+[[ -n "$cmd" ]] || { usage; exit 0; }
+
+case "$cmd" in
+  help) usage; exit 0 ;;
+  new|serve|publish|pub|display|cd) : ;;
+  *) die "commande inconnue: $cmd (utilise --help)" ;;
+esac
+
+case "$cmd" in
+  new|serve|publish|pub|display) need_repo ;;
+  cd)
+    [[ -d "$BLOG_DIR" ]] || die "dossier introuvable: $BLOG_DIR"
+    open "$BLOG_DIR"
+    exit 0
+    ;;
+esac
+
+case "$cmd" in
+  new)
+    [[ ${#args[@]} -ge 1 ]] || die "usage: herdev new \"Titre\" | new <source.md> [--with-assets] | new --from <source.md> [--with-assets]"
+
+    source_md=""
+    with_assets=0
+    title_args=()
+
+    # parse args for new (flags in any order)
+    i=0
+    while [[ $i -lt ${#args[@]} ]]; do
+      a="${args[$i]}"
+      case "$a" in
+        --with-assets) with_assets=1 ;;
+        --from|-f)
+          ((i++))
+          [[ $i -lt ${#args[@]} ]] || die "usage: herdev new --from <source.md> [--with-assets]"
+          source_md="${args[$i]}"
+          ;;
+        *)
+          title_args+=("$a")
+          ;;
+      esac
+      ((i++))
+    done
+
+    # source mode if:
+    # - --from provided
+    # - OR single arg that is an existing *.md file (even without --from)
+    if [[ -z "$source_md" && ${#title_args[@]} -eq 1 && -f "${title_args[0]}" && "${title_args[0]}" == *.md ]]; then
+      source_md="${title_args[0]}"
+      title_args=()
+    fi
+
+    if [[ -n "$source_md" ]]; then
+      source_md="$(resolve_file_path "$source_md")"
+      frontmatter_has_any "$source_md" || die "le fichier source doit contenir un front matter (--- ou +++) en 1ère ligne"
+
+      title="$(frontmatter_get_title "$source_md")"
+      slug="$(slugify "$title")"
+      d="$(date +%Y-%m-%d)"
+      rel="content/${SECTION}/${d}-${slug}/index.md"
+      file="$BLOG_DIR/$rel"
+      bundle_dir="$(dirname "$file")"
+
+      mkdir -p "$bundle_dir"
+      cp "$source_md" "$file"
+
+      if [[ $with_assets -eq 1 ]]; then
+        copy_assets_from_source_dir "$source_md" "$bundle_dir"
+      fi
+
+      echo "Créé depuis source: $file"
+      open_in_editor "$file"
+    else
+      [[ ${#title_args[@]} -ge 1 ]] || die "usage: herdev new \"Titre\""
+      title="${title_args[*]}"
+      slug="$(slugify "$title")"
+      d="$(date +%Y-%m-%d)"
+      rel="content/${SECTION}/${d}-${slug}/index.md"
+      hugo -s "$BLOG_DIR" new content "$rel" >/dev/null
+      file="$BLOG_DIR/$rel"
+      echo "Créé: $file"
+      open_in_editor "$file"
+    fi
+    ;;
+
+  serve)
+    ( open "http://localhost:1313/" >/dev/null 2>&1 || true ) &
+    hugo -s "$BLOG_DIR" server --buildDrafts --navigateToChanged
+    ;;
+
+  publish|pub)
+    target="${args[0]:-}"
+    if [[ -z "${target:-}" ]]; then
+      target="$(git -C "$BLOG_DIR" status --porcelain \
+        | awk '{print $2}' \
+        | grep -E '^content/' \
+        | head -n 1 || true)"
+    fi
+    [[ -n "${target:-}" ]] || die "rien à publier (aucun changement sous content/)"
+    file="$BLOG_DIR/$target"
+    [[ -f "$file" ]] || die "fichier introuvable: $file"
+
+    frontmatter_set_draft_false "$file"
+    hugo -s "$BLOG_DIR" --minify >/dev/null
+
+    if [[ "$target" == */index.md ]]; then
+      git -C "$BLOG_DIR" add "$(dirname "$target")"
+    else
+      git -C "$BLOG_DIR" add "$target"
+    fi
+
+    title="$(frontmatter_get_title "$file")"
+    git -C "$BLOG_DIR" commit -m "post: $title" >/dev/null || die "commit impossible (rien à committer ?)"
+    git -C "$BLOG_DIR" push
+    echo "Publié: $title"
+    ;;
+
+  display)
+    sub="${args[0]:-}"
+    case "$sub" in
+      example|exemple)
+        file="$(resolve_post_path "${args[1]:-}")"
+        cat "$file"
+        ;;
+      *)
+        die "usage: herdev display example [path]"
+        ;;
+    esac
+    ;;
+esac

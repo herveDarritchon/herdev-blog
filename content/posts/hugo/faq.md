@@ -1,16 +1,22 @@
-+++
-categories = ['Hugo']
-categories_weight = 62
-series = ['Blogging with Hugo']
-tutorials = ['Hugo']
-slug = 'hugo-faq'
-tags = ['Development', 'Hugo', 'Tutorials']
-tags_weight = 41
-title = 'Hugo FAQ'
-date = 2022-07-31T10:48:33+01:00
-draft = true
-weight = 3
-+++
+---
+categories:
+  - "Hugo"
+categories_weight: 62
+series:
+  - "Blogging with Hugo"
+tutorials:
+  - "Hugo"
+slug: "hugo-faq"
+tags:
+  - "Development"
+  - "Hugo"
+  - "Tutorials"
+tags_weight: 41
+title: "Hugo FAQ"
+date: 2022-07-31T10:48:33+01:00
+draft: true
+weight: 3
+---
 
 - pensez à récupérer les thèmes avec l'erreur :
 - found no layout file for "HTML" for kind "home

@@ -1,7 +1,13 @@
 ---
-title: Let's Blog !
-date: 2025-12-15
-publishdate: 2025-12-16
+title: "IDE"
+description: "Articles sur les environnements de développement : VS Code, plugins, réglages et événements."
 ---
 
-Des posts sur l'IDE.
+Collection d'articles pratiques autour des environnements de développement, principalement VS Code.
+
+Contenu typique :
+- configurations recommandées, extensions utiles et snippets.  
+- résolutions de problèmes courants (extensions, submodules, intégration avec le build).  
+- notes d'événements ou sorties (format résumé technique et actions à entreprendre).
+
+Public : développeurs cherchant à optimiser leur workflow IDE ou à reproduire des setups.

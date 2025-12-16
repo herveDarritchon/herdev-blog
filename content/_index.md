@@ -1,15 +1,18 @@
 ---
-title: Being a Dev !
-date: 2021-12-03
-publishdate: 2021-12-03
+title: "Accueil"
+description: "Vue d'ensemble du site : sections techniques, conventions de contenu et navigation."
 ---
 
-Nowadays every CEO, each company is talking about ***"Digital"***, it is the master piece every entreprise in the world. Behind "Digital" there is Code. And behind Code, there is "Developers" or ***"Devs"*** as we call us. For decades I have been developing softwares for a big french telecom company, spending my time between developing in Cobol, C, Java, Kotlin, … and attending meetings. I let you guess the percentage between these 2 activities :)
+Ce dépôt contient de la documentation et des notes techniques destinées aux développeurs.  
+Principales sections :
 
-As developers we are the soldiers in the front line of the ***"Digital World"*** but we are also the Officer that set up the strategy and make some operational decisions. It is too many times forgotten by Devs but this is a true power we should be aware of.
+- `posts/` : articles et tutoriels techniques (organisés en sections).  
+- `about/` : informations sur l'auteur, contact et contribution.  
+- Ressources : conventions Hugo, archetypes, workflow de publication.
 
-Our World is moving fast but Computer Science is moving even faster. So, as a Dev, we are ***"on the Edge"***. In everyday we have to learn new paradigmes, new languages, new frameworks. It is quite a challenge and there some kind of gamble to make the right choice.
+Conventions rapides :
+- les articles utilisent des *leaf bundles* (`.../<slug>/index.md`),
+- les listes de section sont contrôlées par des fichiers `_index.md`,
+- les versions multilingues peuvent être suffixées `.en.md` ou organisées par `content/en` / `content/fr`.
 
-So It's been a while since I wanted to share my experience and my point of view on ***"Being a Dev"***, so I have started this blog.
-
-I will talk about any reflexions, issues, new paradigmes, ReST API and code I encounter in my day to day work.
+Utilise ce répertoire comme point d'entrée pour trouver guides, tutoriels et notes pratiques.

@@ -1,0 +1,26 @@
+{{ define "main" }}
+<article>
+    <h1>{{ .Title }}</h1>
+
+    {{ with .Params.description }}
+    <p>{{ . }}</p>
+    {{ end }}
+
+    {{ .Content }}
+
+    {{/* Optionnel : liste des sous-pages (license, etc.) en bas */}}
+    {{ $children := (where .RegularPages "Params.hideFromAbout" "!=" true).ByWeight }}
+    {{ if gt (len $children) 0 }}
+    <hr>
+    <h2>Pages</h2>
+    <ul>
+        {{ range $children }}
+        <li>
+            <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+            {{ with .Params.description }} — {{ . }}{{ end }}
+        </li>
+        {{ end }}
+    </ul>
+    {{ end }}
+</article>
+{{ end }}
