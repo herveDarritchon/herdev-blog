@@ -7,7 +7,10 @@ theme = "papercss-hugo-theme"
 googleAnalytics = "UA-214081111-1"
 disqusShortname = "herveDarritchon"
 enableRobotsTXT = true
+enableGitInfo = true
 
+[frontmatter]
+lastmod = [":git", "lastmod", "modified", ":fileModTime", "date"]
 
 [languages]
   [languages.fr]
