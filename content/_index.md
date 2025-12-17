@@ -26,14 +26,13 @@ de **poser des bases qui tiendront encore dans 2 ans**.
 ### Architecture logicielle
 
 Quand un projet grossit, les **“petites entorses”** deviennent des dettes qui coûtent cher. Ici, on parle de structure,
-de
-séparation des responsabilités, et de décisions qui évitent de tout recâbler à chaque évolution.  
+de séparation des responsabilités, et de décisions qui évitent de tout recâbler à chaque évolution.    
 ➡️ À explorer : [**/posts/architecture/**](posts/architecture)
 
 ### Le vaste monde de la JVM
 
 Des sujets sur la JVM orientés pratiques : (les outils, les librairies, les langages), comment les utiliser, et surtout
-**pourquoi**.
+**pourquoi**.  
 ➡️ À explorer : [**/posts/jvm**](posts/jvm)
 
 ### IDE & productivité (VS Code, etc.)
@@ -47,8 +46,7 @@ vraiment dans le quotidien.
 ## Comment c’est organisé (et pourquoi c’est volontaire)
 
 - **Tout est rangé par rubriques** sous [**/posts/**](posts) : chaque thème a sa page d’accueil (pratique pour
-  “farfouiller” sans
-  se perdre).
+  “farfouiller” sans se perdre).
 - **Contenus bilingues FR/EN**, très souvent, tu trouveras une version ([**FR**](posts/fr)) et ([**EN**](posts/en)), le
   contenu est par défaut en FR.
 - **Des formats différents** selon le besoin :

@@ -7,9 +7,11 @@ description: "Software architecture, Hugo, the JVM, tooling (VS Code)… A blog 
 
 > "Build. Understand. Refactor."
 
-If you’re looking for yet another post promising you’ll become a “10x developer in 5 minutes”, you might get bored. Here,
-we prefer things that actually hold up—while still embracing modern tools like AI: how to organize, how to decide, how to
-keep a codebase readable as it grows, and how to avoid turning tooling into a religion. You can come for one detail… and
+If you’re looking for yet another post promising you’ll become a “10x developer in 5 minutes”, you might get bored.
+Here, we prefer things that actually hold up—while still embracing modern tools like AI: how to organize, how to decide,
+how
+to keep a codebase readable as it grows, and how to avoid turning tooling into a religion. You can come for one detail…
+and
 leave with a different way of thinking about your code.
 
 Here you’ll find **practical articles**, **step-by-step tutorials**, and **lessons learned** about building digital
@@ -25,12 +27,12 @@ that will still hold two years from now**.
 ### Software architecture
 
 As a project grows, **“small shortcuts”** turn into expensive debt. Here we talk about structure, separation of
-responsibilities, and decisions that prevent you from rewiring everything at every new requirement.  
+responsibilities, and decisions that prevent you from rewiring everything at every new requirement.    
 ➡️ Explore: [**/posts/architecture/**](posts/architecture)
 
 ### The wide world of the JVM
 
-Hands-on JVM topics: tools, libraries, languages—how to use them, and most importantly **why**.  
+Hands-on JVM topics: tools, libraries, languages—how to use them, and most importantly **why**.    
 ➡️ Explore: [**/posts/jvm**](posts/jvm)
 
 ### IDEs & productivity (VS Code, etc.)
@@ -45,7 +47,8 @@ changes in day-to-day work.
 
 - **Everything is grouped by section** under [**/posts/**](posts): each theme has its own landing page (so you can
   “browse around” without getting lost).
-- **Bilingual content (FR/EN)**: quite often you’ll find both a ([**FR**](posts/fr)) and an ([**EN**](posts/en)) version.
+- **Bilingual content (FR/EN)**: quite often you’ll find both a ([**FR**](posts/fr)) and an ([**EN**](posts/en))
+  version.
   Content is French by default.
 - **Different formats depending on the need**:
     - deep-dives (step back, frame the problem)
