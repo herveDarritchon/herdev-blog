@@ -3,93 +3,76 @@ title: "Welcome"
 description: "Software architecture, Hugo, the JVM, tooling (VS Code)… A blog to build, understand, and improve what we ship."
 ---
 
-# A blog for people who like to understand how things work
+# A blog for people who want to understand — not just execute
 
-> "Build. Understand. Refactor."
+> **Build. Understand. Refactor.**  
+> Explicit decisions, honest trade-offs, and foundations that still hold up in two years.
 
-If you’re looking for yet another post promising you’ll become a “10x developer in 5 minutes”, you might get bored. Here,
-we prefer things that actually hold up—while still embracing modern tools like AI: how to organize, how to decide, how to
-keep a codebase readable as it grows, and how to avoid turning tooling into a religion. You can come for one detail… and
-leave with a different way of thinking about your code.
-
-Here you’ll find **practical articles**, **step-by-step tutorials**, and **lessons learned** about building digital
-products—from architecture to code, all the way to the tooling that saves you time (or wastes it when chosen poorly).
-
-The goal isn’t to “make it pretty”: it’s to **make decisions explicit**, **avoid common traps**, and **build foundations
-that will still hold two years from now**.
+You won’t find “magic” recipes here.  
+You’ll find something better: **decision frameworks**, **reproducible procedures**, and **field notes** on what actually breaks when a project grows.
 
 ---
 
-## What you’ll find here
+## What you’ll get (practical)
 
-### Software architecture
-
-As a project grows, **“small shortcuts”** turn into expensive debt. Here we talk about structure, separation of
-responsibilities, and decisions that prevent you from rewiring everything at every new requirement.  
-➡️ Explore: [**/posts/architecture/**](posts/architecture)
-
-### The wide world of the JVM
-
-Hands-on JVM topics: tools, libraries, languages—how to use them, and most importantly **why**.  
-➡️ Explore: [**/posts/jvm**](posts/jvm)
-
-### IDEs & productivity (VS Code, etc.)
-
-Because your IDE and workflow are part of the final product: shortcuts, releases, announcements, and what actually
-changes in day-to-day work.  
-➡️ Explore: [**/posts/ide**](posts/ide)
+- **Understand** how the pieces fit together (architecture → code → tooling → delivery).
+- **Decide faster** (with criteria) without lying to yourself.
+- **Refactor without panic**: keep a codebase readable, testable, and evolvable.
 
 ---
 
-## How it’s organized (and why it’s intentional)
+## Pick your entry point
 
-- **Everything is grouped by section** under [**/posts/**](posts): each theme has its own landing page (so you can
-  “browse around” without getting lost).
-- **Bilingual content (FR/EN)**: quite often you’ll find both a ([**FR**](posts/fr)) and an ([**EN**](posts/en)) version.
-  Content is French by default.
-- **Different formats depending on the need**:
-    - deep-dives (step back, frame the problem)
-    - practical guides (do, configure, structure)
-    - step-by-step tutorials (progress without skipping steps)
+### 🧱 Software architecture
+Structure, modularization, separation of responsibilities, tech debt, reversible/irreversible decisions.  
+➡️ Go to **/posts/architecture/**: [Explore architecture](/posts/architecture/)
 
-This structure isn’t here to look “neat”: it’s meant to let you **navigate by curiosity**, not only through a Google
-search.
+### ☕ The JVM (Kotlin/Java/tooling)
+Useful, hands-on topics: tools, libraries, integration, hidden costs, recurring traps.  
+➡️ Go to **/posts/jvm/**: [Explore the JVM](/posts/jvm/)
 
----
+### ⌨️ IDE & productivity (VS Code, workflow)
+What actually changes day-to-day: configuration, methods, and tooling anti-patterns.  
+➡️ Go to **/posts/ide/**: [Explore tooling](/posts/ide/)
 
-## Where to start if you’re new here
-
-- If you want to **structure a project**: start with **Architecture**.
-- If you want **useful Kotlin**: pick a serialization post or the first step of a tutorial and follow along.
-- If you want a **tooling boost**: check out the VS Code notes.
+### 🧰 Hugo & blog platform
+Building and maintaining a clean Hugo setup: structure, i18n, pipelines, editorial scalability.  
+➡️ Go to **/posts/hugo/**: [Explore Hugo](/posts/hugo/)
 
 ---
 
-## The point: make you want to dig deeper
+## What you’ll (almost) never find here
 
-You can read one post and move on… but the real value is elsewhere: **connecting the dots**.  
-Architecture shapes your code, your code shapes your tools, your tools shape your speed, your speed shapes your
-choices… and so on.
+- dogma (“you should always…”)
+- tool worship
+- empty checklists
+- overhyped productivity promises
 
-So go explore: chances are you’ll stumble on **one detail that unblocks you**, **a structure you can reuse**, or **an
-idea you’ll disagree with—and that’s a good thing**.  
-There’s (almost) always something here for each of us.
-
----
-
-## A small bonus at the end
-
-### Hugo & blogging platform
-
-Yes, it’s a blog… and yes, the platform is part of the topic. You’ll find content to **build**, **organize**, and
-**maintain** a clean, clear, scalable Hugo site (without ripping your hair out every time you add a new section).  
-➡️ Explore: [**/posts/hugo/**](posts/hugo)
+If an article proposes a method, it also says **when not to use it**.
 
 ---
 
-## About / License
+## How it’s organized
 
-If you want the context (who writes, why, and under what license):  
+- Everything lives under **/posts/**, grouped by topic: [Browse all topics](/posts/)
+- Formats, depending on what you need:
+  - **Analyses**: framing, criteria, decisions
+  - **Practical guides**: do/configure/structure
+  - **Step-by-step tutorials**: progress without skipping steps
+- **French by default**, with an **English version when it adds real value**.
+
+---
+
+## Where to start (if you want a path)
+
+- Want to **structure a project** → start with **Architecture**.
+- Want **Kotlin/Java that matters** → go to **JVM**.
+- Want to **stop wasting time in your IDE** → go to **IDE**.
+- Want to **industrialize your blog** → go to **Hugo**.
+
+---
+
+## About / Licensing
+
+Context, author, and license:  
 ➡️ **/about/** and **/about/licensing/**
-
----

@@ -3,98 +3,76 @@ title: "Bienvenue"
 description: "Architecture logicielle, Hugo, JVM, outillage (VS Code)… Un blog pour construire, comprendre, et améliorer ce qu’on livre."
 ---
 
-# Un blog pour les gens qui aiment comprendre comment ça fonctionne
+# Un blog pour celles et ceux qui veulent comprendre — pas juste exécuter
 
-> "Construire. Comprendre. Refactorer."
+> **Construire. Comprendre. Refactorer.**  
+> Des décisions explicites, des trade-offs assumés, et des bases qui tiennent encore dans 2 ans.
 
-Si tu cherches un énième article qui te promet “developer 10x plus vite en 5 minutes”, tu risques de t’ennuyer. Ici, on
-préfère les sujets qui tiennent la route tout en embrassant les outils modernes comme l'IA : comment organiser, comment
-décider, comment garder un projet lisible quand il grossit, et comment éviter que l’outillage devienne une religion. Tu
-peux venir pour un détail… et repartir avec une manière différente de penser ton code.
-
-Ici, tu trouveras des **articles concrets**, des **tutos pas-à-pas** et des **retours d’expérience** sur la fabrication
-d’un produit numérique : de l’architecture au code, jusqu’à l’outillage qui te fait gagner du temps (ou t’en fait perdre
-quand il est mal choisi).
-
-L’objectif n’est pas de “faire joli” : c’est de **rendre les choix explicites**, d’**éviter les pièges classiques**, et
-de **poser des bases qui tiendront encore dans 2 ans**.
+Tu ne trouveras pas ici des recettes “magiques”.  
+Tu trouveras mieux : **des cadres de décision**, **des procédures reproductibles**, et **des retours d’expérience** sur ce qui casse vraiment quand un projet grossit.
 
 ---
 
-## Ce que tu peux venir chercher
+## Ce que tu vas gagner (concret)
 
-### Architecture logicielle
-
-Quand un projet grossit, les **“petites entorses”** deviennent des dettes qui coûtent cher. Ici, on parle de structure,
-de
-séparation des responsabilités, et de décisions qui évitent de tout recâbler à chaque évolution.  
-➡️ À explorer : [**/posts/architecture/**](posts/architecture)
-
-### Le vaste monde de la JVM
-
-Des sujets sur la JVM orientés pratiques : (les outils, les librairies, les langages), comment les utiliser, et surtout
-**pourquoi**.
-➡️ À explorer : [**/posts/jvm**](posts/jvm)
-
-### IDE & productivité (VS Code, etc.)
-
-Parce que ton IDE et ton workflow font partie du produit final : raccourcis, nouveautés, annonces, et ce que ça change
-vraiment dans le quotidien.  
-➡️ À explorer : [**/posts/ide**](posts/ide)
+- **Comprendre** comment les pièces s’emboîtent (architecture → code → outillage → livraison).
+- **Décider plus vite** (avec critères) sans te raconter d’histoires.
+- **Refactorer sans panique** : en gardant un projet lisible, testable, et évolutif.
 
 ---
 
-## Comment c’est organisé (et pourquoi c’est volontaire)
+## Choisis ta porte d’entrée
 
-- **Tout est rangé par rubriques** sous [**/posts/**](posts) : chaque thème a sa page d’accueil (pratique pour
-  “farfouiller” sans
-  se perdre).
-- **Contenus bilingues FR/EN**, très souvent, tu trouveras une version ([**FR**](posts/fr)) et ([**EN**](posts/en)), le
-  contenu est par défaut en FR.
-- **Des formats différents** selon le besoin :
-    - articles d’analyse (prendre du recul, poser un cadre)
-    - guides pratiques (faire, configurer, structurer)
-    - tutoriels en étapes (progresser sans sauter des marches)
+### 🧱 Architecture logicielle
+Structure, modularisation, séparation des responsabilités, dette technique, décisions réversibles/irréversibles.  
+➡️ Aller à **/posts/architecture/** : [Explorer l’architecture](/posts/architecture/)
 
-Cette organisation n’est pas là pour faire **“propre”** : elle sert à te laisser **naviguer par curiosité**, pas
-uniquement
-via une recherche Google.
+### ☕ JVM (Kotlin/Java/outillage)
+Du pratique utile : outils, libs, intégration, coûts cachés, pièges récurrents.  
+➡️ Aller à **/posts/jvm/** : [Explorer la JVM](/posts/jvm/)
 
----
+### ⌨️ IDE & productivité (VS Code, workflow)
+Ce qui change vraiment au quotidien : config, méthodes, et anti-patterns d’outillage.  
+➡️ Aller à **/posts/ide/** : [Explorer l’outillage](/posts/ide/)
 
-## Par où commencer si tu débarques
-
-- Si tu veux **structurer un projet** : commence par **Architecture**.
-- Si tu veux **du Kotlin utile** : prends un article de sérialisation ou un début de tuto, et déroule.
-- Si tu veux **un boost outillage** : passe voir les notes VS Code.
+### 🧰 Hugo & plateforme de blog
+Construire et maintenir un Hugo propre : structure, i18n, pipeline, scalabilité éditoriale.  
+➡️ Aller à **/posts/hugo/** : [Explorer Hugo](/posts/hugo/)
 
 ---
 
-## L’idée : te donner envie de creuser
+## Ce que tu ne trouveras (presque) jamais ici
 
-Tu peux lire un article et repartir… mais le vrai gain est ailleurs : **connecter les sujets**.  
-L’architecture influence ton code, ton code influence tes outils, tes outils influencent ta vitesse, ta vitesse
-influence tes choix… et ainsi de suite.
+- du dogme (“il faut toujours…”)
+- du “tool worship”
+- des checklists creuses
+- des promesses de productivité hors-sol
 
-Alors va fouiller : il y a de bonnes chances que tu tombes sur **un détail qui te débloque**, **une structure que tu
-peux réutiliser**, ou **une idée que tu vas contredire — et c’est très bien**.  
-Il y a (presque) toujours quelque chose pour chacun d’entre nous.
+Si un article propose une méthode, il donne aussi **quand ne pas l’appliquer**.
 
 ---
 
-## Un petit bonus pour la fin
+## Comment c’est organisé
 
-### Hugo & plateforme de blog
+- Tout est sous **/posts/**, rangé par rubriques : [Voir toutes les rubriques](/posts/)
+- Formats au choix :
+  - **Analyses** : cadre, critères, décisions
+  - **Guides pratiques** : faire/configurer/structurer
+  - **Tutoriels** : progresser sans sauter d’étapes
+- Contenu **FR par défaut**, version **EN quand elle apporte quelque chose**.
 
-Oui, c’est un blog… et oui, sa plateforme est aussi un sujet. Tu trouveras des contenus pour **construire**, **organiser
-** et **maintenir** un site Hugo propre, clair, et scalable (sans t’arracher les cheveux à chaque nouvelle section).  
-➡️ À explorer : [**/posts/hugo/**](posts/hugo)
+---
+
+## Par où commencer (si tu veux un itinéraire)
+
+- Tu veux **structurer un projet** → commence par **Architecture**.
+- Tu veux **du Kotlin/Java qui sert** → va sur **JVM**.
+- Tu veux **arrêter de perdre du temps avec ton IDE** → va sur **IDE**.
+- Tu veux **industrialiser ton blog** → va sur **Hugo**.
 
 ---
 
 ## À propos / Licence
 
-Si tu veux comprendre le cadre (qui écrit, pourquoi, et sous quelle licence) :  
+Cadre, auteur, et licence :  
 ➡️ **/about/** et **/about/licensing/**
-
----
