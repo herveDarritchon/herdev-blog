@@ -76,7 +76,7 @@ herdev display example
 Ou un post précis :
 
 ```bash
-herdev display example content/posts/2025-12-16-mon-post/index.md
+herdev display example content/posts/2025-12-16-mon-posts/index.md
 ```
 
 Redirection utile :
@@ -116,13 +116,13 @@ Contraintes :
 Exemples :
 
 ```bash
-herdev new ./drafts/mon-post.md
+herdev new ./drafts/mon-posts.md
 ```
 
 Forme explicite :
 
 ```bash
-herdev new --from ./drafts/mon-post.md
+herdev new --from ./drafts/mon-posts.md
 ```
 
 ---
@@ -139,13 +139,13 @@ herdev new --from ./drafts/mon-post.md
 **Commandes :**
 
 ```bash
-herdev new --from ./drafts/mon-post.md --with-assets
+herdev new --from ./drafts/mon-posts.md --with-assets
 ```
 
 ou, forme courte :
 
 ```bash
-herdev new ./drafts/mon-post.md --with-assets
+herdev new ./drafts/mon-posts.md --with-assets
 ```
 
 **Ce qui est copié :**
@@ -177,7 +177,7 @@ drafts/
 Commande :
 
 ```bash
-herdev new --from ./drafts/mon-post/mon-post.md --with-assets
+herdev new --from ./drafts/mon-posts/mon-posts.md --with-assets
 ```
 
 ---
@@ -195,7 +195,7 @@ herdev serve
 Publier un post précis :
 
 ```bash
-herdev publish content/posts/2025-12-16-mon-post/index.md
+herdev publish content/posts/2025-12-16-mon-posts/index.md
 ```
 
 Publier sans chemin (prend le premier fichier modifié sous `content/`) :

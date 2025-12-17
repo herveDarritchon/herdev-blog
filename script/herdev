@@ -54,7 +54,7 @@ slugify() {
   s="$(printf '%s' "$s" | iconv -f UTF-8 -t ASCII//TRANSLIT 2>/dev/null || true)"
   [[ -n "$s" ]] || s="$1"
   s="$(printf '%s' "$s" | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//; s/-+/-/g')"
-  printf '%s\n' "${s:-post}"
+  printf '%s\n' "${s:-posts}"
 }
 
 open_in_editor() {

@@ -10,7 +10,7 @@ enableRobotsTXT = true
 enableGitInfo = true
 
 [frontmatter]
-lastmod = [":git", "lastmod", "modified", ":fileModTime", "date"]
+lastmod = ["lastmod", "modified", ":git", ":fileModTime", "date"]
 
 [languages]
   [languages.fr]

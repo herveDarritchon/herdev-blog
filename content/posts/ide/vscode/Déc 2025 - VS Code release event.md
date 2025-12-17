@@ -38,6 +38,7 @@ La dernière release de l’année a été présentée lors d’un live “VS Co
 
 Ce qui m’intéresse ici, ce n’est pas l’effet waouh. C’est le changement de **workflow** : quand tu passes de “je demande un bout de code” à “je délègue des tâches, j’isole, je review, je merge”.
 
+<!--more-->
 ---
 
 ## 1) Le chat devient un hub d’agents (pas juste une conversation)
