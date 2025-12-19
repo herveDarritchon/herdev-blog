@@ -8,6 +8,7 @@ handoffs:
     agent: herdev-blog-writer
     prompt: "À partir du plan et du premier POST_BRIEF, rédige le post complet (Markdown), avec TL;DR, <!--more-->, validations observables, pièges/limites, alternatives, checklist, refs officielles et changelog."
     send: false
+model: GPT-5 mini
 ---
 
 # Rôle

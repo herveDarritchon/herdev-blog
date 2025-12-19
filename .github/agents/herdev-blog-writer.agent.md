@@ -9,6 +9,11 @@ handoffs:
     agent: herdev-post-translator
     prompt: "Traduis en anglais (idiomatique du domaine) le dernier message assistant (le post généré). Si tu trouves une ligne `# Fichier: <path>`, génère la sortie pour le fichier `<path>` mais avec `.en` inséré avant `.md` (ex: `post.md` -> `post.en.md`) dans le même dossier. Sinon, pose 1 question: quel est le chemin du fichier source ? Préserve front matter, `<!--more-->`, liens, code, commandes, outputs, chemins."
     send: false
+  - label: "Durcir (anti-invention)"
+    agent: herdev-post-hardener
+    prompt: "Analyse le dernier post généré (ou la sélection si présente) et produis le rapport de durcissement. Exige [Vérifié doc]/[À vérifier]/[Hypothèse] pour chaque point non trivial, avec méthode de validation."
+    send: false
+model: GPT-4.1
 ---
 
 # Rôle
