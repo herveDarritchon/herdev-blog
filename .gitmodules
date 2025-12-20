@@ -2,3 +2,6 @@
 	path = themes/papercss-hugo-theme
 	url = https://github.com/behaska/papercss-hugo-theme/papercss-hugo-theme.git
 	branch = master
+[submodule "external/herdev-labs"]
+	path = external/herdev-labs
+	url = git@github.com:herveDarritchon/herdev-labs.git
