@@ -1,0 +1,11 @@
+{{- $user := .Get "user" -}}
+{{- $repo := .Get "repo" | default "herdev-labs" -}}
+{{- $tag := .Get "tag" -}}
+{{- $zip := .Get "zip" -}}
+
+{{- if or (not $user) (not $tag) (not $zip) -}}
+{{- errorf "labzip: params requis user, tag, zip" -}}
+{{- end -}}
+
+{{- $url := printf "https://github.com/%s/%s/releases/download/%s/%s" $user $repo $tag $zip -}}
+<a href="{{ $url }}">Download lab ZIP</a>

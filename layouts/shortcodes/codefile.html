@@ -1,0 +1,9 @@
+{{- $path := .Get "path" -}}
+{{- $lang := .Get "lang" | default "text" -}}
+
+{{- if not (fileExists $path) -}}
+{{- errorf "codefile: fichier introuvable: %s" $path -}}
+{{- end -}}
+
+{{- $code := readFile $path -}}
+{{- highlight $code $lang "" -}}

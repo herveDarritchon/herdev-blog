@@ -1,0 +1,28 @@
+{{- $path := .Get "path" -}}
+{{- $lang := .Get "lang" | default "text" -}}
+{{- $name := .Get "name" -}}
+
+{{- if not (fileExists $path) -}}
+{{- errorf "codesnip: fichier introuvable: %s" $path -}}
+{{- end -}}
+{{- if not $name -}}
+{{- errorf "codesnip: paramètre name requis" -}}
+{{- end -}}
+
+{{- $code := readFile $path -}}
+{{- $begin := printf "snippet:begin %s" $name -}}
+{{- $end := printf "snippet:end %s" $name -}}
+
+{{- $parts1 := split $code $begin -}}
+{{- if lt (len $parts1) 2 -}}
+{{- errorf "codesnip: begin introuvable (%s) dans %s" $begin $path -}}
+{{- end -}}
+
+{{- $afterBegin := index $parts1 1 -}}
+{{- $parts2 := split $afterBegin $end -}}
+{{- if lt (len $parts2) 2 -}}
+{{- errorf "codesnip: end introuvable (%s) dans %s" $end $path -}}
+{{- end -}}
+
+{{- $snippet := trim (index $parts2 0) "\n\r\t " -}}
+{{- highlight $snippet $lang "" -}}

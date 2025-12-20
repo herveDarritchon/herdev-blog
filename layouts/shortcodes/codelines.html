@@ -1,0 +1,23 @@
+{{- $path := .Get "path" -}}
+{{- $lang := .Get "lang" | default "text" -}}
+{{- $from := (.Get "from" | default "1") | int -}}
+{{- $to := (.Get "to" | default "999999") | int -}}
+
+{{- if not (fileExists $path) -}}
+{{- errorf "codelines: fichier introuvable: %s" $path -}}
+{{- end -}}
+
+{{- $code := readFile $path -}}
+{{- $lines := split $code "\n" -}}
+{{- $start := sub $from 1 -}}
+{{- $count := sub $to $start -}}
+
+{{- if lt $start 0 -}}
+{{- errorf "codelines: from doit être >= 1 (got %d)" $from -}}
+{{- end -}}
+{{- if lt $count 0 -}}
+{{- errorf "codelines: to doit être >= from (from=%d to=%d)" $from $to -}}
+{{- end -}}
+
+{{- $snippet := delimit (first $count (after $start $lines)) "\n" -}}
+{{- highlight $snippet $lang "" -}}
