@@ -19,8 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          submodules: true
           fetch-depth: 0
+          submodules: recursive
+          token: ${{ secrets.LABS_PAT }}
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
