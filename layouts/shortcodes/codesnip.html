@@ -1,28 +1,66 @@
 {{- $path := .Get "path" -}}
 {{- $lang := .Get "lang" | default "text" -}}
-{{- $name := .Get "name" -}}
 
+{{- if not $path -}}
+{{- errorf "codesnip: paramètre path requis" -}}
+{{- end -}}
 {{- if not (fileExists $path) -}}
 {{- errorf "codesnip: fichier introuvable: %s" $path -}}
 {{- end -}}
-{{- if not $name -}}
-{{- errorf "codesnip: paramètre name requis" -}}
-{{- end -}}
 
 {{- $code := readFile $path -}}
+
+{{- $name := .Get "name" -}}
+{{- $startRaw := .Get "start" -}}
+{{- $endRaw := .Get "end" -}}
+
+{{- /* MODE 1: name (markers) */ -}}
+{{- if $name -}}
 {{- $begin := printf "snippet:begin %s" $name -}}
 {{- $end := printf "snippet:end %s" $name -}}
 
 {{- $parts1 := split $code $begin -}}
 {{- if lt (len $parts1) 2 -}}
-{{- errorf "codesnip: begin introuvable (%s) dans %s" $begin $path -}}
+{{- errorf "codesnip(name): begin introuvable (%s) dans %s" $begin $path -}}
 {{- end -}}
 
 {{- $afterBegin := index $parts1 1 -}}
 {{- $parts2 := split $afterBegin $end -}}
 {{- if lt (len $parts2) 2 -}}
-{{- errorf "codesnip: end introuvable (%s) dans %s" $end $path -}}
+{{- errorf "codesnip(name): end introuvable (%s) dans %s" $end $path -}}
 {{- end -}}
 
 {{- $snippet := trim (index $parts2 0) "\n\r\t " -}}
 {{- highlight $snippet $lang "" -}}
+
+{{- else -}}
+
+{{- /* MODE 2: range (start/end) */ -}}
+{{- if or (not $startRaw) (not $endRaw) -}}
+{{- errorf "codesnip(range): fournir soit name=..., soit start=... et end=... (path=%s)" $path -}}
+{{- end -}}
+
+{{- $start := $startRaw | int -}}
+{{- $end := $endRaw | int -}}
+
+{{- if lt $start 1 -}}
+{{- errorf "codesnip(range): start doit être >= 1 (got %d) (path=%s)" $start $path -}}
+{{- end -}}
+{{- if lt $end $start -}}
+{{- errorf "codesnip(range): end doit être >= start (start=%d end=%d) (path=%s)" $start $end $path -}}
+{{- end -}}
+
+{{- $lines := split $code "\n" -}}
+{{- $n := len $lines -}}
+{{- if gt $end $n -}}
+{{- errorf "codesnip(range): end (%d) dépasse le nombre de lignes (%d) (path=%s)" $end $n $path -}}
+{{- end -}}
+
+{{- $offset := sub $start 1 -}}
+{{- $count := add (sub $end $start) 1 -}}
+{{- $snippet := delimit (first $count (after $offset $lines)) "\n" -}}
+{{- $snippet = trim $snippet "\n\r\t " -}}
+
+{{- highlight $snippet $lang "" -}}
+
+{{- end -}}

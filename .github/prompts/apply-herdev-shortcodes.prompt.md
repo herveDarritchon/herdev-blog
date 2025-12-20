@@ -1,6 +1,6 @@
 ---
 name: apply-herdev-shortcodes
-description: "Intègre les shortcodes Hugo dans le post courant en s’appuyant sur le lab herdev-labs associé (preuve par le code)."
+description: "Remplace les blocs de code du post par des shortcodes Hugo pointant vers external/herdev-labs (codesnip en mode range start/end)."
 argument-hint: "Recommandé: sélectionner tout le post"
 agent: herdev-post-shortcodes-integrator
 ---
@@ -14,3 +14,7 @@ ${selection}
 
 ## Fallback (UTILISER UNIQUEMENT si la sélection est vide)
 ${file}
+
+Contraintes supplémentaires (spécifiques à ce prompt) :
+- Utiliser `codesnip` **en mode range** (`start/end`) et ne pas utiliser `name=`.
+- Ne pas modifier le code du lab pour ajouter des marqueurs.

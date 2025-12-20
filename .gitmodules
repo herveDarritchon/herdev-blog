@@ -5,3 +5,4 @@
 [submodule "external/herdev-labs"]
 	path = external/herdev-labs
 	url = git@github.com:herveDarritchon/herdev-labs.git
+	branch = main
