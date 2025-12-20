@@ -69,8 +69,8 @@ Afficher **un fichier entier** (pratique pour des petits fichiers, ou pour un RE
 
 ```md
 {{< codefile
-  path="external/herdev-labs/kotlin/jackson-sealed-class/README.md"
-  lang="markdown"
+path="external/herdev-labs/kotlin/jackson-sealed-class/README.md"
+lang="markdown"
 >}}
 ```
 
@@ -98,17 +98,20 @@ Afficher un **extrait** basé sur des numéros de lignes.
 
 ```md
 {{< codelines
-  path="external/herdev-labs/kotlin/jackson-sealed-class/src/test/kotlin/scenario01_notyping/Scenario01_NoTypingTest.kt"
-  lang="kotlin"
-  from="1"
-  to="80"
+path="external/herdev-labs/kotlin/jackson-sealed-class/src/test/kotlin/scenario01_notyping/Scenario01_NoTypingTest.kt"
+lang="kotlin"
+from="1"
+to="80"
 >}}
 ```
 
 ### Bon usage
 
 ✅ extrait stable (haut de fichier, bloc qui ne bouge pas)
-❌ fragile si tu refacto souvent (les lignes changent) → préfère `codesnip`.
+❌ fragile si tu refacto souvent (les lignes changent).
+
+👉 Politique actuelle : utilise `codesnip` **en mode range** pour standardiser.
+Si tu veux plus robuste, utilise `codesnip` **en mode name** (marqueurs) — mais ça “pollue” le lab.
 
 ---
 
@@ -116,12 +119,32 @@ Afficher un **extrait** basé sur des numéros de lignes.
 
 ### À quoi ça sert
 
-Afficher un extrait **délimité par des marqueurs** dans le code.
-C’est la méthode la plus robuste sur la durée.
+Afficher un extrait de code **directement depuis `external/herdev-labs/...`** (source de vérité), sans copier-coller.
+`codesnip` supporte **deux modes** :
 
-### Comment marquer un extrait dans le code
+- **Mode range (politique par défaut)** : extraire par **plage de lignes** (`start` / `end`).
+  - Avantage : **ne “pollue” pas** le code du lab.
+  - Limite : **fragile** si tu refacto (les lignes changent).
+- **Mode name (optionnel)** : extraire entre deux **marqueurs** `snippet:begin/end` (plus robuste).
+  - Avantage : **très maintenable** (tu peux refactor sans casser le post).
+  - Limite : il faut accepter des commentaires de marqueurs dans le lab.
 
-Dans ton fichier Kotlin (ou autre), ajoute :
+> Politique HerDev Blog : **utiliser `codesnip` en mode range par défaut** (pas de marqueurs ajoutés par les agents).
+> Si tu veux maximiser la robustesse long terme, bascule ponctuellement sur le mode `name`.
+
+### Mode range — choisir `start` / `end`
+
+- `start` et `end` sont des **numéros de lignes 1-indexés** (la première ligne = 1).
+- Choisis une plage qui capture **une idée** (un test, une fonction, une config), pas un fichier entier.
+
+Astuce pratique (VS Code) :
+- place ton curseur sur la première ligne du bloc → note `Ln`
+- idem sur la dernière ligne
+- utilise ces valeurs dans le shortcode.
+
+### Mode name (optionnel) — marqueurs dans le code
+
+Si tu acceptes d’ajouter des marqueurs dans le lab, tu peux délimiter l’extrait ainsi :
 
 ```kotlin
 // snippet:begin existing-property
@@ -129,15 +152,33 @@ Dans ton fichier Kotlin (ou autre), ajoute :
 // snippet:end existing-property
 ```
 
-> Le nom (`existing-property`) doit être unique **dans le fichier** et stable.
-
 ### Signature
 
-* `path` (obligatoire)
-* `lang` (optionnel)
-* `name` (obligatoire) : nom du snippet (la clé après `snippet:begin`)
+**Mode range (par défaut)**
 
-### Exemple
+- `path` (obligatoire) : chemin vers le fichier
+- `lang` (optionnel) : langage pour la coloration
+- `start` (obligatoire) : ligne de début (1-indexée)
+- `end` (obligatoire) : ligne de fin (1-indexée, inclusive)
+
+**Mode name (optionnel)**
+
+- `path` (obligatoire)
+- `lang` (optionnel)
+- `name` (obligatoire) : id du snippet (utilisé par `snippet:begin/end`)
+
+### Exemple (mode range)
+
+```md
+{{< codesnip
+  path="external/herdev-labs/kotlin/jackson-sealed-class/src/test/kotlin/scenario03_existingprop/Scenario03_ExistingPropTest.kt"
+  lang="kotlin"
+  start="1"
+  end="60"
+>}}
+```
+
+### Exemple (mode name — optionnel)
 
 ```md
 {{< codesnip
@@ -149,11 +190,14 @@ Dans ton fichier Kotlin (ou autre), ajoute :
 
 ### Bon usage
 
-✅ idéal pour des posts maintenables (tu refacto sans casser l’article)
-✅ parfait pour montrer “le morceau qui compte”
-⚠️ discipline : ne supprime pas les marqueurs sans mettre à jour les posts.
+✅ préfère extraire depuis un **test** (preuve reproductible)  
+✅ garde l’extrait **court** : un snippet = une idée  
+✅ pour le mode range : prends une plage **structurelle** (ex: une méthode `@Test` entière)  
+⚠️ mode range : refactor = mise à jour probable des `start/end`  
+✅ si tu veux une doc “qui ne casse jamais” : passe au mode `name` (et assume les marqueurs)
 
 ---
+
 
 ## Shortcode `labzip` (optionnel)
 
@@ -197,7 +241,8 @@ Voici la stratégie `@JsonTypeInfo` avec un discriminant en propriété.
 {{< codesnip
   path="external/herdev-labs/kotlin/jackson-sealed-class/src/test/kotlin/scenario02_property/Scenario02_PropertyTest.kt"
   lang="kotlin"
-  name="type-info-property"
+  start="1"
+  end="60"
 >}}
 ```
 
@@ -280,11 +325,19 @@ Si tu dois déplacer/renommer des fichiers cités dans les posts :
 * vérifie le chemin dans le shortcode
 * vérifie que le fichier existe dans `external/herdev-labs/...`
 
-### “codesnip: begin introuvable”
+### Erreurs `codesnip` (mode range)
 
-* le marker `snippet:begin <name>` n’est pas présent
-* typo dans `name`
-* markers supprimés lors d’un refactor
+* `codesnip(range): start doit être >= 1` → vérifie `start`
+* `codesnip(range): end doit être >= start` → vérifie la cohérence `start/end`
+* `codesnip(range): end (...) dépasse le nombre de lignes (...)` → ajuste `end` (ou choisis une plage plus stable)
+
+### Erreurs `codesnip` (mode name — optionnel)
+
+* `codesnip(name): begin introuvable` / `end introuvable` :
+  * le marker `snippet:begin <name>` / `snippet:end <name>` n’est pas présent
+  * typo dans `name`
+  * markers supprimés lors d’un refactor
+
 
 ### Le rendu n’affiche pas la coloration attendue
 
@@ -314,7 +367,13 @@ Si tu dois déplacer/renommer des fichiers cités dans les posts :
 {{< codelines path="external/herdev-labs/..." lang="kotlin" from="10" to="40" >}}
 ```
 
-### Snippet nommé
+### Snippet (mode range — par défaut)
+
+```md
+{{< codesnip path="external/herdev-labs/..." lang="kotlin" start="10" end="40" >}}
+```
+
+### Snippet (mode name — optionnel, avec marqueurs)
 
 ```md
 {{< codesnip path="external/herdev-labs/..." lang="kotlin" name="my-snippet" >}}
