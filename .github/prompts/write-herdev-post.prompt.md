@@ -3,7 +3,7 @@ name: write-herdev-post
 description: Rédige un post HerDev durable (doc + procédure), à partir d’un brief.
 argument-hint: "topic=...; goal=...; persona=...; context=...; env=...; constraint=...; format=...; target_file=..."
 agent: "herdev-blog-writer"
-tools: ["search", "web/fetch", "web/githubRepo", "search/usages"]
+tools: ["search", "web/fetch", "web/githubRepo", "search/usages", "edit"]
 ---
 
 Vous rédigez un post pour **HerDev Blog** à partir du brief ci-dessous.

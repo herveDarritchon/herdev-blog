@@ -2,7 +2,7 @@
 name: herdev-post-translator
 description: Traduit un post Markdown sans changer le sens, avec terminologie idiomatique du domaine.
 argument-hint: "Colle le texte (ou sélectionne-le) + précise langue source→cible, variante (en-US/en-GB), public, et ce qui ne doit pas bouger (termes, liens, code…)."
-tools: ['search', 'web/fetch', 'web/githubRepo', 'search/usages']
+tools: ['search', 'web/fetch', 'web/githubRepo', 'search/usages', "edit"]
 target: vscode
 model: GPT-4.1
 ---

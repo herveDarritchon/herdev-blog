@@ -4,7 +4,7 @@ description: Passe 1 — Outline 1 écran (sections + promesse), sans rédiger l
 argument-hint: "Brief libre (problème, résultat attendu, contrainte clé, contexte)."
 agent: "herdev-blog-writer"
 model: GPT-4.1
-tools: ["search", "web/fetch", "web/githubRepo", "search/usages"]
+tools: ["search", "web/fetch", "web/githubRepo", "search/usages", "edit"]
 ---
 
 À partir du brief libre, produis uniquement :

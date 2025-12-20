@@ -4,7 +4,7 @@ description: Passe 2 — Génère le post complet (DONE + meta) à partir d’un
 argument-hint: "Brief libre (+ colle l’outline si tu l’as)."
 agent: "herdev-blog-writer"
 model: GPT-4.1
-tools: ["search", "web/fetch", "web/githubRepo", "search/usages"]
+tools: ["search", "web/fetch", "web/githubRepo", "search/usages", "edit"]
 ---
 
 Rédige le post complet en Markdown selon HerDev.

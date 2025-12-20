@@ -3,7 +3,7 @@ name: plan-herdev-series
 description: Génère un plan de série + briefs de posts à partir d’un brief libre.
 argument-hint: "Brief libre. Optionnel: dossier cible (ex: documentation/editorial/series/<slug>/)."
 agent: "herdev-series-planner"
-tools: ["search", "web/fetch", "web/githubRepo", "search/usages"]
+tools: ["search", "web/fetch", "web/githubRepo", "search/usages", "edit"]
 ---
 
 Le brief est le texte libre fourni par l’utilisateur après la commande.
@@ -13,9 +13,10 @@ Le brief est le texte libre fourni par l’utilisateur après la commande.
 - Objectif : produire une série cohérente, sans doublons, avec un ordre de lecture clair.
 - Si info bloquante : poser 1–3 questions max puis s’arrêter.
 
-## Sortie attendue (2 niveaux)
+## Sortie attendue sous forme de fichiers à créer(2 niveaux)
+
 ### A) SERIES_PLAN.md
-Produire un plan structuré incluant :
+Créer et Produire un plan structuré dans le fichier `sources/documentation/series/<slug>/SERIES_PLAN.md` en incluant :
 - Contexte + audience
 - Scope / non-scope (explicite)
 - Objectif de la série
@@ -25,7 +26,7 @@ Produire un plan structuré incluant :
 - Checklist de sortie de la série
 
 ### B) Un brief par post
-Pour chaque post, produire un bloc `POST_BRIEF_<slug>.md` contenant :
+Pour chaque post, créer et produire un fichier `POST_BRIEF_<slug>.md` dans le répertoire `sources/documentation/series/<slug>/` qui devra contenir :
 - Intention (problème précis) + résultat attendu
 - Format choisi + plan détaillé (sections)
 - Validations observables

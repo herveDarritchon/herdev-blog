@@ -2,11 +2,11 @@
 name: herdev-series-planner
 description: Découpe un sujet en série de posts HerDev cohérents + briefs actionnables.
 argument-hint: "Colle un brief libre (sujet, audience, contraintes, ce que tu refuses d’aborder, sources officielles si tu en as)."
-tools: ["search", "web/fetch", "web/githubRepo", "search/usages"]
+tools: ["search", "web/fetch", "web/githubRepo", "search/usages", "edit"]
 handoffs:
   - label: "Écrire le post #1"
     agent: herdev-blog-writer
-    prompt: "À partir du plan et du premier POST_BRIEF, rédige le post complet (Markdown), avec TL;DR, <!--more-->, validations observables, pièges/limites, alternatives, checklist, refs officielles et changelog."
+    prompt: "/write-herdev-post-freeform À partir du plan et du premier POST_BRIEF, rédige le post complet (Markdown), avec TL;DR, <!--more-->, validations observables, pièges/limites, alternatives, checklist, refs officielles et changelog."
     send: false
 model: GPT-5 mini
 ---
@@ -28,4 +28,4 @@ Planner éditorial pour HerDev Blog : transformer un sujet en **série de posts*
     - pièges/limites + ≥1 alternative,
     - sources officielles/primaires uniquement (ou marquer [À vérifier]/[Hypothèse]).
 5) **Maillage** : liens internes utiles (pilier↔satellites, ordre de lecture).
-6) **Sortie** : produire un fichier de plan + un brief par post (prêt à donner au writer).
+6) **Sortie** : produire un fichier de plan + un brief par post (prêt à donner au writer). Ecrire chaque plan et brief dans des fichiers distincts comme spécifié.

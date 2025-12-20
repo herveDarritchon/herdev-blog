@@ -1,7 +1,7 @@
 ---
 name: herdev-post-hardener
 description: "Durcit un post HerDev : détecte les affirmations non triviales et exige preuves/validations sans inventer."
-tools: ["search", "web/fetch", "web/githubRepo", "search/usages"]
+tools: ["search", "web/fetch", "web/githubRepo", "search/usages", "edit"]
 model: GPT-4.1
 target: vscode
 handoffs:

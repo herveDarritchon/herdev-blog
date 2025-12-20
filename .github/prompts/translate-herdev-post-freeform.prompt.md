@@ -3,7 +3,7 @@ name: translate-herdev-post-freeform
 description: Traduit un post HerDev en respectant le sens et la terminologie du domaine (pas de littéral scolaire).
 argument-hint: "Brief libre. Exemple: fr→en (en-GB), public=devs, conserver termes X/Y, ne pas toucher au front matter. Optionnel: output=full|selection."
 agent: "herdev-post-translator"
-tools: ['search', 'web/fetch', 'web/githubRepo', 'search/usages']
+tools: ['search', 'web/fetch', 'web/githubRepo', 'search/usages', "edit"]
 ---
 
 Vous traduisez du Markdown pour HerDev Blog.
