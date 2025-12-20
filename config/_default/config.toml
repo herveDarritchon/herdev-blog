@@ -53,6 +53,17 @@ lastmod = ["lastmod", "modified", ":git", ":fileModTime", "date"]
 [pagination]
 pagerSize = 5
 
+[params.lyket]
+apiKey = "pt_8df890b716eaafef7da06e7a853046"
+namespace = "herdev"
+# optionnel: true si tu veux éviter l'ID de session navigateur
+disableSessionId = false
+
+[params.feedback]
+github_repo = "https://github.com/herveDarritchon/herdev-blog"
+issue_template = "bug_report.yml" # optionnel (si tu utilises Issue Forms)
+
+
 [privacy.disqus]
 disable = true
 
