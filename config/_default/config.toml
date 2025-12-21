@@ -60,7 +60,7 @@ namespace = "herdev"
 disableSessionId = false
 
 [params.feedback]
-github_repo = "https://github.com/herveDarritchon/herdev-blog"
+github_repo = "herveDarritchon/herdev-blog"
 issue_template = "bug_report.yml" # optionnel (si tu utilises Issue Forms)
 
 
