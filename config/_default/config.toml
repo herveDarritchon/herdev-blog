@@ -4,7 +4,6 @@ defaultContentLanguage = "fr"
 defaultContentLanguageInSubdir = false
 title = 'HerDev Blog'
 theme = "papercss-hugo-theme"
-googleAnalytics = "UA-214081111-1"
 disqusShortname = "herveDarritchon"
 enableRobotsTXT = true
 enableGitInfo = true
@@ -129,3 +128,7 @@ xHTML = false
   [markup.tableOfContents]
   endLevel = 6
   startLevel = 2
+
+[services]
+  [services.googleAnalytics]
+    id = "G-WVH039WQ2N"
