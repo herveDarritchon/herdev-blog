@@ -6,7 +6,7 @@ tags:
   [
     "java",
     "quarkus",
-    "agents",
+    "ai",
     "rag",
     "architecture",
     "langchain4j",
