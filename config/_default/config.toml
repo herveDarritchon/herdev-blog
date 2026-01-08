@@ -129,6 +129,5 @@ xHTML = false
   endLevel = 6
   startLevel = 2
 
-[services]
-  [services.googleAnalytics]
-    id = "G-F37H0TBLBE"
+[params.google.analytics]
+id = "G-F37H0TBLBE"
