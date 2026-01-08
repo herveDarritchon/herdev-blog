@@ -6,14 +6,12 @@ tags:
   [
     "java",
     "quarkus",
-    "llm",
     "agents",
     "rag",
-    "tool-calling",
-    "structured-output",
     "architecture",
     "langchain4j",
   ]
+series: "ai-agents-and-java"
 ---
 
 > Inspiré de la conf vJUG CONNECT “AI & Java: From Structured Prompts to Smarter Apps” ([YouTube](https://www.youtube.com/watch?v=8l1obGG_6jQ)).
