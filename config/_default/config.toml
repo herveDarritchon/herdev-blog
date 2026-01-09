@@ -134,5 +134,6 @@ xHTML = false
   endLevel = 6
   startLevel = 2
 
-[params.google.analytics]
-id = "G-F37H0TBLBE"
+[params.goatCounter]
+user = "behaska"
+
