@@ -62,11 +62,11 @@ import org.jspecify.annotations.Nullable;
 
 And more importantly, you can put the contract where it belongs: at package scope.
 
-```java
-// src/main/java/com/example/package-info.java
-@org.jspecify.annotations.NullMarked
-package com.example;
-```
+{{< codesnip path="external/herdev-labs/java/java-null-safety/src/main/java/com/headevlabs/tutorials/revelation1/package-info.java" start="1" end="11" lang="java" >}}
+
+Full example (project `java-null-safety`): a package-level `@NullMarked`, then a service whose nullable return is *mandatory* to handle.
+
+{{< codesnip path="external/herdev-labs/java/java-null-safety/src/main/java/com/headevlabs/tutorials/revelation1/UserService.java" start="1" end="21" lang="java" >}}
 
 **Concrete impact:** when your IDE, CI, and dependencies “speak” the same nullness, you stop inventing local conventions.
 
@@ -88,22 +88,13 @@ public void process(
 ) {}
 ```
 
-### After: annotating the exception (signal)
+### After: annotating the method parameter (promoCode)
 
-```java
-@org.jspecify.annotations.NullMarked
-public final class CheckoutService {
+{{< codesnip path="external/herdev-labs/java/java-null-safety/src/main/java/com/headevlabs/tutorials/revelation2/ShoppingCart.java" start="11" end="26" lang="java" >}}
 
-  public void process(String a, String b, String c) {
-    // everything is non-null by default in this scope
-  }
+Concrete example (project `java-null-safety`): `@NullMarked` at class level, one `@Nullable` field, one nullable parameter, and one nullable return.
 
-  public @org.jspecify.annotations.Nullable String findDiscountCode(String userId) {
-    // the exception becomes visible
-    return null;
-  }
-}
-```
+{{< codesnip path="external/herdev-labs/java/java-null-safety/src/main/java/com/headevlabs/tutorials/revelation2/ShoppingCart.java" start="43" end="75" lang="java" >}}
 
 ### The real benefit: you change what the reader “sees”
 
@@ -132,18 +123,11 @@ NullAway also documents compile-flag mechanisms like **SuppressionNameAliases** 
 
 ### Demo: the same bug should show up in the same place
 
-```java
-import org.jspecify.annotations.Nullable;
+{{< codesnip path="external/herdev-labs/java/java-null-safety/src/main/java/com/headevlabs/tutorials/revelation3/DataProcessor.java" start="18" end="43" lang="java" >}}
 
-final class Demo {
-  static @Nullable String getValue() { return null; }
+Same idea (project `java-null-safety`): a forgotten `@Nullable` shows up in the same place, and a suppression remains portable.
 
-  static int boom() {
-    @Nullable String value = getValue();
-    return value.length(); // ⚠️ should be flagged (IDE + NullAway)
-  }
-}
-```
+{{< codesnip path="external/herdev-labs/java/java-null-safety/src/main/java/com/headevlabs/tutorials/revelation3/DataProcessor.java" start="45" end="56" lang="java" >}}
 
 ### Suppressions: use a scalpel, not a broom
 
@@ -188,17 +172,13 @@ This is spelled out in the JSpecify docs (TYPE_USE syntax)[^jspecify-type-use-sy
 
 ### Generics: maximum power, maximum pitfalls
 
-```java
-import org.jspecify.annotations.Nullable;
+{{< codesnip path="external/herdev-labs/java/java-null-safety/src/main/java/com/headevlabs/tutorials/revelation4/TypeUsePitfalls.java" start="16" end="60" lang="java" >}}
 
-// A non-null list that may contain null elements
-java.util.List<@Nullable String> names;
+Extracts (project `java-null-safety`): placement on arrays, then on nested generics (and a reminder about invariance).
 
-// A non-null map, non-null keys, optional values (e.g., cache)
-java.util.Map<String, @Nullable String> cache;
-```
+{{< codesnip path="external/herdev-labs/java/java-null-safety/src/main/java/com/headevlabs/tutorials/revelation4/TypeUsePitfalls.java" start="67" end="82" lang="java" >}}
 
-**Don’t claim this:** `List<String>` is a subtype of `List<@Nullable String>` in Java.
+**Don’t claim this:** `List<String>` is not a subtype of `List<@Nullable String>` in Java.
 Even if `String` is “stricter” than `@Nullable String`, **Java generics are invariant**. If you mean “list of strings (possibly null)”, you must say it explicitly (`List<@Nullable String>`) or use wildcards depending on the use case.
 
 ### When to use TYPE_USE “heavy artillery”
@@ -216,13 +196,9 @@ Goal: *proof by code*, not a big-bang rewrite.
 
 JSpecify 1.0.0 is published on Maven Central.[^jspecify-release-1-0-0]
 
-```xml
-<dependency>
-  <groupId>org.jspecify</groupId>
-  <artifactId>jspecify</artifactId>
-  <version>1.0.0</version>
-</dependency>
-```
+{{< codesnip path="external/herdev-labs/java/java-null-safety/pom.xml" start="11" end="35" lang="xml" >}}
+
+`pom.xml` excerpt (project `java-null-safety`):
 
 ### 2) Null-mark a single package
 
@@ -236,43 +212,9 @@ package com.acme.orders;
 
 NullAway provides a full Maven example (Error Prone + NullAway on the processor path + flags).[^nullaway-config]
 
-```xml
-<build>
-  <plugins>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-compiler-plugin</artifactId>
-      <version>3.11.0</version>
-      <configuration>
-        <source>11</source>
-        <target>11</target>
-        <encoding>UTF-8</encoding>
+{{< codesnip path="external/herdev-labs/java/java-null-safety/pom.xml" start="51" end="85" lang="xml" >}}
 
-        <compilerArgs>
-          <arg>-XDcompilePolicy=simple</arg>
-          <arg>-Xplugin:ErrorProne</arg>
-          <arg>-XepOpt:NullAway:AnnotatedPackages=com.acme.orders</arg>
-          <!-- Optional (more explicit): -->
-          <!-- <arg>-Xep:NullAway:ERROR</arg> -->
-        </compilerArgs>
-
-        <annotationProcessorPaths>
-          <path>
-            <groupId>com.google.errorprone</groupId>
-            <artifactId>error_prone_core</artifactId>
-            <version>2.23.0</version>
-          </path>
-          <path>
-            <groupId>com.uber.nullaway</groupId>
-            <artifactId>nullaway</artifactId>
-            <version>0.10.15</version>
-          </path>
-        </annotationProcessorPaths>
-      </configuration>
-    </plugin>
-  </plugins>
-</build>
-```
+Variant (project `java-null-safety`): enabling happens through a Maven profile, which makes it easy to toggle during a migration.
 
 > Real notes:
 >
@@ -284,6 +226,8 @@ NullAway provides a full Maven example (Error Prone + NullAway on the processor 
 ```bash
 mvn clean compile
 ```
+
+If you use a profile (as in the example above), run `mvn clean compile -Pnullaway` instead.
 
 You’re looking for two categories:
 
@@ -307,7 +251,7 @@ You’re looking for two categories:
 
 JSpecify doesn’t “remove” `null` from Java. It does better: it makes nullness **explicit**, **standardized**, and **verifiable**.[^jspecify-user-guide] And with NullAway, that contract isn’t decorative: it breaks the build when you lie.[^spring-null-safety]
 
-If you work with Spring, the ecosystem is already pushing in this direction: Spring Framework 7 switched to JSpecify and is aiming for broader coverage (including arrays/generics), with build-time enforcement.[^spring-null-safety]
+And if you work with Spring, the ecosystem is already moving this way: Spring Framework 7 switched to JSpecify and is aiming for broader coverage (including arrays/generics), with build-time enforcement.[^spring-null-safety]
 
 ### The reasonable call to action
 
@@ -329,8 +273,6 @@ You’ll get immediate feedback—and you’ll know whether your codebase has a 
 * **`Optional<T>`**: useful to express absence *for some returns*, but not suitable everywhere (params, overhead, legacy signatures). Spring also notes these limits and mentions Valhalla as a future path for costs.[^spring-null-safety]
 * **Checker Framework**: excellent, but often heavier in migration/team discipline (evaluate based on your false-positive tolerance and tooling budget).[^stackoverflow-nullable-java]
 * **Kotlin**: null-safety is native to the type system; if you’re JVM polyglot, JSpecify explicitly calls out Kotlin interop benefits (especially for static analysis).[^jspecify-github-releases]
-
----
 
 [^spring-null-safety]: Spring Blog — Null Safety in Spring applications with JSpecify and NullAway: [https://spring.io/blog/2025/03/10/null-safety-in-spring-apps-with-jspecify-and-null-away](https://spring.io/blog/2025/03/10/null-safety-in-spring-apps-with-jspecify-and-null-away).
 
