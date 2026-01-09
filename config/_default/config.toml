@@ -99,12 +99,17 @@ defaultMarkdownHandler = "goldmark"
 
 [markup.goldmark.extensions]
 definitionList = true
-footnote = true
 linkify = true
 strikethrough = true
 table = true
 taskList = true
 typographer = true
+
+[markup.goldmark.extensions.footnote]
+enable = true
+backlinkHTML = "↩"
+# optionnel mais utile si tu concatènes plusieurs contenus sur une page
+# enableAutoIDPrefix = true
 
 [markup.goldmark.parser]
 attribute = true
